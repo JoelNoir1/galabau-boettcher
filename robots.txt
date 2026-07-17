@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# [PLATZHALTER-DOMAIN] Vor Livegang die echte Domain eintragen
+Sitemap: https://www.galabau-boettcher.de/sitemap.xml

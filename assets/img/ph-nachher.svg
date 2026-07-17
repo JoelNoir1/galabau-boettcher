@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="Nachher-Platzhalterbild">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1F5A40"/><stop offset="1" stop-color="#12291F"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#g)"/>
+  <path d="M-40 700c220-40 420 60 640 20s380-90 560-60 340 70 480 40" stroke="#97AB29" stroke-opacity=".5" stroke-width="3" fill="none"/>
+  <path d="M-40 800c240-30 460 50 680 15s360-70 540-45 300 55 460 35" stroke="#97AB29" stroke-opacity=".3" stroke-width="3" fill="none"/>
+  <g stroke="#B8CE41" stroke-opacity=".65" stroke-width="3" stroke-linecap="round">
+    <path d="M200 700v-60M200 640l-22 26M200 640l22 26"/>
+    <path d="M560 690v-70M560 620l-24 28M560 620l24 28"/>
+    <path d="M980 700v-60M980 640l-22 26M980 640l22 26"/>
+    <path d="M1340 680v-70M1340 610l-24 28M1340 610l24 28"/>
+  </g>
+  <text x="800" y="450" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="64" font-weight="700" fill="#ECEFD5" opacity=".92">Nachher</text>
+  <text x="800" y="510" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="28" fill="#C7D2BE" opacity=".75">Platzhalter – echtes Projektfoto folgt</text>
+</svg>

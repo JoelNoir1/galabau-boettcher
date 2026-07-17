@@ -1,0 +1,16 @@
+# System
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Python (Bild-Pipeline)
+__pycache__/
+*.pyc
+.venv/
+
+# Node (falls später genutzt)
+node_modules/
+
+# Editor
+.vscode/
+.idea/

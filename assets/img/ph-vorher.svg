@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="Vorher-Platzhalterbild">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3E4740"/><stop offset="1" stop-color="#272E29"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#g)"/>
+  <path d="M-40 700c220 -40 420 60 640 20s380-90 560-60 340 70 480 40" stroke="#8B958C" stroke-opacity=".35" stroke-width="3" fill="none"/>
+  <path d="M-40 800c240-30 460 50 680 15s360-70 540-45 300 55 460 35" stroke="#8B958C" stroke-opacity=".22" stroke-width="3" fill="none"/>
+  <path d="M120 690l90-50M320 720l70-60M560 700l90-45M840 680l70-55M1120 690l90-50M1380 670l80-45" stroke="#6E7870" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/>
+  <text x="800" y="450" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="64" font-weight="700" fill="#C9CFC8" opacity=".85">Vorher</text>
+  <text x="800" y="510" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="28" fill="#AEB6AE" opacity=".7">Platzhalter – echtes Projektfoto folgt</text>
+</svg>
