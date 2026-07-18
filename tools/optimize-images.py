@@ -31,14 +31,20 @@ PHOTOS = {
     "ZAUNBAU1.jpg": "zaunbau",
     "termin sichern.jpg": "zaun-anfrage",
     "abriss und rückbau Topaz Gigapixel 2x Skalierung.jpg": "abriss-rueckbau",
-    "pflaster-wegebau-neu.jpg": "pflaster-wegebau",
+    "pflaster-wegebau-neu.png": "pflaster-wegebau",
     "erd-baggerarbeiten-neu.jpg": "erd-baggerarbeiten",
     "entwaesserung-sanierung-neu.jpg": "entwaesserung-sanierung",
+    "abriss-rueckbau-neu.jpg": "abriss-rueckbau-neu",
+    "gruenpflege-neu.jpg": "gruenpflege",
 }
 WIDTHS = [480, 800, 1200]
 SQUARE = 600
 # Nur diese Motive brauchen quadratische Kacheln (Instagram-Grid)
 SQUARE_SLUGS = {"dachpflege", "zaunbau", "zaun-anfrage", "abriss-rueckbau"}
+# Fotos ohne EXIF-Flag, die physisch gedreht vorliegen (Wert = Pillow-Transpose)
+ROTATE = {
+    "gruenpflege-neu.jpg": Image.Transpose.ROTATE_270,  # 90 Grad im Uhrzeigersinn
+}
 
 report = []
 
@@ -46,6 +52,8 @@ report = []
 def load(name: str) -> Image.Image:
     im = Image.open(SRC / name)
     im = ImageOps.exif_transpose(im)  # EXIF-Drehung einbrennen
+    if name in ROTATE:
+        im = im.transpose(ROTATE[name])  # manuelle Drehung, falls kein EXIF-Flag
     return im.convert("RGB")
 
 

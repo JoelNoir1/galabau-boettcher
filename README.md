@@ -31,9 +31,12 @@ tools/optimize-images.py    Bild-Pipeline (Python + Pillow)
      `formEndpoint: "https://api.web3forms.com/submit"` eintragen und im
      Formular ein `<input type="hidden" name="access_key" value="…">` ergänzen.
    - Danach die Datenschutzerklärung (Abschnitt 4) entsprechend ergänzen.
-3. **Platzhalter-Bewertungen ersetzen:** Die drei Karten unter `#bewertungen`
-   in `index.html` sind sichtbar als Platzhalter markiert – vor Livegang
-   zwingend durch echte Kundenstimmen ersetzen (rechtlich relevant!).
+3. **Google-Bewertungen:** Unter `#bewertungen` in `index.html` steht die
+   echte Rezension von Christian Lang (5,0 aus 1 Google-Rezension). Weitere
+   echte Rezensionen können als zusätzliche `.tst`-Karten ergänzt werden;
+   dann `.tst-single` zu `.tst-track` ändern und Anzahl/`aggregateRating`
+   (JSON-LD im `<head>`) anpassen. Den Button-Link auf das Google-Profil
+   bei Vorliegen der kurzen Profil-URL (`https://g.page/r/…`) ersetzen.
 4. **Platzhalter-Zahlen prüfen:** Sektion „Zahlen" in `index.html`
    (100+ Projekte / 10+ Jahre / 100 % Leidenschaft) mit echten Werten belegen.
 5. **Impressum/Datenschutz:** `[PLATZHALTER]`-Stellen ausfüllen (USt-ID,
