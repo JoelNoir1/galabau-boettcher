@@ -41,8 +41,11 @@ tools/optimize-images.py    Bild-Pipeline (Python + Pillow)
    (100+ Projekte / 10+ Jahre / 100 % Leidenschaft) mit echten Werten belegen.
 5. **Impressum/Datenschutz:** `[PLATZHALTER]`-Stellen ausfüllen (USt-ID,
    Hoster, ggf. Handwerkskammer) und rechtlich prüfen lassen.
-6. **Projekt-Orte eintragen:** In `projekte/index.html` steht als Ort bisher
-   „Region Kyffhäuserland" – durch echte Orte ersetzen.
+6. **Projekt-Orte prüfen:** In `projekte/index.html` sind die Orte gesetzt
+   (Zaunbau & Abriss: „Region Kyffhäuserkreis", Dachpflege: „Region Erfurt").
+   Bei Bedarf durch die konkreten Orte ersetzen. Das Einzugsgebiet
+   (Kyffhäuserkreis, Sömmerda, Erfurt, Sangerhausen, Nordthüringen) ist in
+   Titeln, Meta-Description, OG-Tags und `areaServed` (JSON-LD) hinterlegt.
 
 ## Bilder austauschen / neue Bilder hinzufügen
 
@@ -60,8 +63,10 @@ quadratische 600-px-Kacheln für das Instagram-Grid (inkl. EXIF-Korrektur).
 - **Hero-Foto:** Sobald ein sauberes Querformat-Foto existiert, in
   `index.html` den Block `.hero__bg` durch den vorbereiteten
   `.hero__photo`-Block ersetzen (Kommentar im HTML zeigt die Stelle).
-- **Vorher/Nachher:** Die Platzhalter `assets/img/ph-vorher.svg` /
-  `ph-nachher.svg` in `projekte/index.html` durch echte Bildpaare ersetzen.
+- **Vorher/Nachher:** Echtes Bildpaar (`vorher-*` / `nachher-*`, Erdarbeiten →
+  Bodenplatte) ist eingebunden. Für weitere Paare die Quelldateien nach
+  `content/originale/` legen, in `tools/optimize-images.py` eintragen und
+  ausführen; dann die Bildpfade im `.ba`-Block in `projekte/index.html` tauschen.
 
 ## Logo austauschen
 

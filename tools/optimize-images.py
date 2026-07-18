@@ -30,12 +30,14 @@ PHOTOS = {
     "1.jpg": "dachpflege",
     "ZAUNBAU1.jpg": "zaunbau",
     "termin sichern.jpg": "zaun-anfrage",
-    "abriss und rückbau Topaz Gigapixel 2x Skalierung.jpg": "abriss-rueckbau",
+    "rueckbau-nebengebaeude.jpg": "abriss-rueckbau",
     "pflaster-wegebau-neu.png": "pflaster-wegebau",
     "erd-baggerarbeiten-neu.jpg": "erd-baggerarbeiten",
     "entwaesserung-sanierung-neu.jpg": "entwaesserung-sanierung",
     "abriss-rueckbau-neu.jpg": "abriss-rueckbau-neu",
     "gruenpflege-neu.jpg": "gruenpflege",
+    "vorher-nachher-vorher.jpg": "vorher",
+    "vorher-nachher-nachher.jpg": "nachher",
 }
 WIDTHS = [480, 800, 1200]
 SQUARE = 600
@@ -147,7 +149,7 @@ def og_image(mark: Image.Image, bg: tuple[int, int, int]) -> None:
     d.line((W / 2 - 90, 388, W / 2 + 90, 388), fill=LIME, width=4)
     d.text((W / 2, 452), "Garten- & Landschaftsbau Böttcher",
            font=font(56, 800), fill=CREAM, anchor="mm")
-    d.text((W / 2, 522), "Pflaster · Zaunbau · Erdarbeiten · Grünpflege — Kyffhäuserland",
+    d.text((W / 2, 522), "Pflaster · Zaunbau · Erdarbeiten · Grünpflege — Kyffhäuserkreis",
            font=font(28, 500), fill=(198, 215, 122), anchor="mm")
     img.save(OUT / "og-image.jpg", "JPEG", quality=86, optimize=True, progressive=True)
     report.append(f"  og-image.jpg  {W}x{H}")

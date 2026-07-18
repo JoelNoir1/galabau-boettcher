@@ -1008,6 +1008,9 @@ body.nav-open { overflow: hidden; }
   letter-spacing: -.01em;
 }
 .contact-note {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
   margin-top: auto;
   padding: .9rem 1.1rem;
   border-radius: var(--radius-sm);
@@ -1015,6 +1018,18 @@ body.nav-open { overflow: hidden; }
   border: 1px solid rgba(151, 171, 41, .35);
   font-size: .92rem;
   color: var(--c-cream);
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+a.contact-note:hover {
+  background: rgba(151, 171, 41, .24);
+  border-color: rgba(151, 171, 41, .6);
+  color: #fff;
+}
+.contact-note__icon {
+  width: 1.7rem;
+  height: 1.7rem;
+  flex: none;
+  color: var(--c-lime-bright);
 }
 
 /* Formular */

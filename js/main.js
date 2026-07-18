@@ -22,7 +22,7 @@
   ------------------------------------------------------------------ */
   const CONFIG = {
     formEndpoint: "",
-    email: "bottchergalabau@gmail.com",
+    email: "galabauboettcher@gmx.de",
   };
 
   const motionOK = window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
@@ -289,7 +289,7 @@
       iframe.className = "map-frame";
       iframe.src =
         "https://www.google.com/maps?q=" +
-        encodeURIComponent("Garten- & Landschaftsbau Böttcher, Wippertalstraße 20, 99707 Kyffhäuserland") +
+        encodeURIComponent("Garten- & Landschaftsbau Böttcher, Wippertalstraße 20, 99707 Kyffhäuserkreis") +
         "&output=embed&hl=de";
       iframe.title = "Google Maps: Anfahrt zu Garten- & Landschaftsbau Böttcher";
       iframe.setAttribute("loading", "lazy");
