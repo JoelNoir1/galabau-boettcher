@@ -22,7 +22,7 @@
   ------------------------------------------------------------------ */
   const CONFIG = {
     formEndpoint: "",
-    email: "galabauboettcher@gmx.de",
+    email: "bottchergalabau@gmail.com",
   };
 
   const motionOK = window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
@@ -277,7 +277,7 @@
       if (e.key === "ArrowLeft") show(index - 1);
       if (e.key === "ArrowRight") show(index + 1);
     });
-    lightbox.addEventListener("close", () => { img.src = ""; });
+    lightbox.addEventListener("close", () => { img.removeAttribute("src"); });
   }
 
   /* ---------- Google Maps: Zwei-Klick-Lösung (DSGVO) ---------- */

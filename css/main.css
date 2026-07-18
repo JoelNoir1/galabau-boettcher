@@ -812,6 +812,51 @@ body.nav-open { overflow: hidden; }
 }
 .tst-dots button.active { background: var(--c-lime); transform: scale(1.25); }
 
+/* Google-Bewertungen */
+.grating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .7rem;
+  margin: 1.4rem 0 0;
+}
+.grating__g { width: 1.9rem; height: 1.9rem; }
+.grating__score {
+  font: 800 1.65rem/1 var(--font-display);
+  letter-spacing: -.01em;
+  color: var(--text);
+}
+.grating__note { font-size: .9rem; color: var(--text-soft); }
+.tst__stars--google { color: #FBBC05; }
+.tst__head {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+.tst__avatar {
+  display: grid;
+  place-items: center;
+  width: 2.6rem; height: 2.6rem;
+  flex: none;
+  border-radius: 50%;
+  background: var(--c-forest);
+  color: var(--c-cream);
+  font: 700 1.05rem/1 var(--font-display);
+}
+.tst__who { flex: 1; min-width: 0; }
+.tst__who strong {
+  display: block;
+  font: 700 .95rem/1.35 var(--font-display);
+}
+.tst__who span {
+  display: block;
+  font-size: .8rem;
+  color: var(--text-soft);
+}
+.tst__g { width: 1.35rem; height: 1.35rem; flex: none; }
+.tst-cta { margin-top: 2rem; text-align: center; }
+
 /* ---------- Instagram ---------- */
 .insta-head {
   display: flex;
@@ -1370,10 +1415,50 @@ html.js .reveal {
   transition: opacity .75s ease, transform .75s var(--ease);
   transition-delay: var(--reveal-delay, 0s);
 }
+html.js .reveal--left { transform: translateX(-34px); }
+html.js .reveal--right { transform: translateX(34px); }
+html.js .reveal--zoom { transform: scale(.95) translateY(14px); }
 html.js .reveal.in {
   opacity: 1;
   transform: none;
 }
+
+/* ---------- Hero-Entrance (beim Laden, gestaffelt) ---------- */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(26px); }
+}
+.hero__content > * { animation: rise .85s var(--ease) backwards; }
+.hero__content > *:nth-child(1) { animation-delay: .08s; }
+.hero__content > *:nth-child(2) { animation-delay: .18s; }
+.hero__content > *:nth-child(3) { animation-delay: .28s; }
+.hero__content > *:nth-child(4) { animation-delay: .38s; }
+.hero__content > *:nth-child(5) { animation-delay: .48s; }
+
+/* ---------- Mikroanimationen ---------- */
+.service-card__icon { transition: transform var(--t-med), background var(--t-med); }
+.service-card:hover .service-card__icon {
+  transform: translateY(-4px) scale(1.06);
+  background: color-mix(in srgb, var(--c-lime) 26%, var(--bg-card));
+}
+.chip { transition: border-color var(--t-fast); }
+.service-card:hover .chip { border-color: color-mix(in srgb, var(--c-lime) 38%, var(--line)); }
+.feature__icon { transition: transform var(--t-med), background var(--t-med); }
+.feature:hover .feature__icon {
+  transform: scale(1.08);
+  background: color-mix(in srgb, var(--c-lime) 18%, var(--bg-card));
+}
+.detail-grid__media img { transition: transform 1.1s var(--ease); }
+.detail-grid__media:hover img { transform: scale(1.045); }
+.step__num { transition: transform var(--t-med), background var(--t-med); }
+.step:hover .step__num {
+  transform: scale(1.08);
+  background: color-mix(in srgb, var(--c-lime) 16%, var(--bg));
+}
+.tst { transition: transform var(--t-med), box-shadow var(--t-med); }
+.tst:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.footer-social svg { transition: transform var(--t-fast); }
+.footer-social:hover svg { transform: scale(1.12); }
+.contact-item a { transition: color var(--t-fast), letter-spacing var(--t-fast); }
 
 /* ---------- Responsive ---------- */
 @media (min-width: 40em) {

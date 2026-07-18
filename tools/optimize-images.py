@@ -31,9 +31,14 @@ PHOTOS = {
     "ZAUNBAU1.jpg": "zaunbau",
     "termin sichern.jpg": "zaun-anfrage",
     "abriss und rückbau Topaz Gigapixel 2x Skalierung.jpg": "abriss-rueckbau",
+    "pflaster-wegebau-neu.jpg": "pflaster-wegebau",
+    "erd-baggerarbeiten-neu.jpg": "erd-baggerarbeiten",
+    "entwaesserung-sanierung-neu.jpg": "entwaesserung-sanierung",
 }
 WIDTHS = [480, 800, 1200]
 SQUARE = 600
+# Nur diese Motive brauchen quadratische Kacheln (Instagram-Grid)
+SQUARE_SLUGS = {"dachpflege", "zaunbau", "zaun-anfrage", "abriss-rueckbau"}
 
 report = []
 
@@ -59,10 +64,11 @@ def responsive(name: str, slug: str) -> None:
         h = round(im.height * w / im.width)
         save_all(im.resize((w, h), Image.LANCZOS), f"{slug}-{w}")
     # Quadratische Kachel (Instagram-Grid), Mittenausschnitt
-    s = min(im.size)
-    left, top = (im.width - s) // 2, (im.height - s) // 2
-    sq = im.crop((left, top, left + s, top + s)).resize((SQUARE, SQUARE), Image.LANCZOS)
-    save_all(sq, f"{slug}-sq-{SQUARE}")
+    if slug in SQUARE_SLUGS:
+        s = min(im.size)
+        left, top = (im.width - s) // 2, (im.height - s) // 2
+        sq = im.crop((left, top, left + s, top + s)).resize((SQUARE, SQUARE), Image.LANCZOS)
+        save_all(sq, f"{slug}-sq-{SQUARE}")
 
 
 def logo() -> tuple[Image.Image, tuple[int, int, int]]:
