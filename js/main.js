@@ -215,6 +215,7 @@
     };
 
     ba.addEventListener("pointerdown", (e) => {
+      ba.classList.add("ba--interacted"); // stoppt den Auto-Sweep, sobald der Nutzer selbst zieht
       ba.setPointerCapture(e.pointerId);
       fromEvent(e);
       const move = (ev) => fromEvent(ev);
@@ -233,6 +234,7 @@
       const stepMap = { ArrowLeft: -3, ArrowRight: 3, Home: -100, End: 100 };
       if (e.key in stepMap) {
         e.preventDefault();
+        ba.classList.add("ba--interacted");
         set(now + stepMap[e.key]);
       }
     });
@@ -267,11 +269,32 @@
       });
     });
 
-    $(".lightbox__close", lightbox).addEventListener("click", () => lightbox.close());
+    /* Animiertes Schließen: läuft über alle drei Schließwege (Button, Backdrop-Klick,
+       Escape), damit der Fade/Scale-Übergang aus main.css auch beim Schließen greift. */
+    const closeAnimated = () => {
+      if (!lightbox.open || lightbox.classList.contains("is-closing")) return;
+      if (!motionOK) { lightbox.close(); return; }
+      lightbox.classList.add("is-closing");
+      let done = false;
+      const finish = () => {
+        if (done) return;
+        done = true;
+        lightbox.classList.remove("is-closing");
+        lightbox.close();
+      };
+      lightbox.addEventListener("transitionend", finish, { once: true });
+      setTimeout(finish, 350); // Sicherheitsnetz, falls transitionend ausbleibt
+    };
+
+    $(".lightbox__close", lightbox).addEventListener("click", closeAnimated);
     $(".lightbox__nav--prev", lightbox).addEventListener("click", () => show(index - 1));
     $(".lightbox__nav--next", lightbox).addEventListener("click", () => show(index + 1));
     lightbox.addEventListener("click", (e) => {
-      if (e.target === lightbox) lightbox.close();
+      if (e.target === lightbox) closeAnimated();
+    });
+    lightbox.addEventListener("cancel", (e) => {
+      e.preventDefault();
+      closeAnimated();
     });
     lightbox.addEventListener("keydown", (e) => {
       if (e.key === "ArrowLeft") show(index - 1);

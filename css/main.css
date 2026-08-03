@@ -1312,6 +1312,21 @@ a.contact-note:hover {
   touch-action: pan-y;
   --pos: 50%;
 }
+/* Auto-Sweep: einmaliger, dezenter Schwenk beim ersten Scroll-in-View, um die
+   Interaktivität des Reglers zu zeigen, bevor der Nutzer selbst zieht. */
+@property --pos {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+@keyframes ba-sweep {
+  0%, 100% { --pos: 50%; }
+  48%, 58% { --pos: 64%; }
+}
+html.js .ba.reveal.in {
+  animation: ba-sweep 2.6s cubic-bezier(.65, 0, .35, 1) .5s 1 both;
+}
+.ba.ba--interacted { animation: none !important; }
 .ba img {
   width: 100%;
   aspect-ratio: 16 / 10;
@@ -1377,12 +1392,36 @@ a.contact-note:hover {
   max-width: min(94vw, 70rem);
   background: transparent;
   overflow: visible;
+  opacity: 0;
+  transform: scale(.96) translateY(10px);
+  transition: opacity .28s var(--ease), transform .28s var(--ease), overlay .28s allow-discrete, display .28s allow-discrete;
+}
+.lightbox[open] {
+  opacity: 1;
+  transform: none;
+}
+@starting-style {
+  .lightbox[open] {
+    opacity: 0;
+    transform: scale(.96) translateY(10px);
+  }
+}
+.lightbox.is-closing {
+  opacity: 0;
+  transform: scale(.97) translateY(6px);
 }
 .lightbox::backdrop {
   background: rgba(10, 22, 16, .92);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity .28s var(--ease), overlay .28s allow-discrete, display .28s allow-discrete;
 }
+.lightbox[open]::backdrop { opacity: 1; }
+@starting-style {
+  .lightbox[open]::backdrop { opacity: 0; }
+}
+.lightbox.is-closing::backdrop { opacity: 0; }
 .lightbox figure { margin: 0; }
 .lightbox img {
   max-height: 82vh;
@@ -1463,6 +1502,20 @@ html.js .reveal--zoom { transform: scale(.95) translateY(14px); }
 html.js .reveal.in {
   opacity: 1;
   transform: none;
+}
+
+/* Curtain-Reveal: eigene, vollständige Sichtbarkeitslogik über clip-path statt
+   opacity/translate — ersetzt reveal--left/--right/--zoom auf demselben Element
+   (nicht kombinieren). Für großformatige Projekt- und Detailbilder. */
+html.js .reveal--curtain {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0 round var(--radius));
+  transition: clip-path 1.05s var(--ease);
+  transition-delay: var(--reveal-delay, 0s);
+}
+html.js .reveal--curtain:not(.in) {
+  clip-path: inset(0 0 0 101% round var(--radius));
 }
 
 /* ---------- Hero-Entrance (beim Laden, gestaffelt) ---------- */
@@ -1603,6 +1656,39 @@ html.js .reveal.in {
   .projects-grid { grid-template-columns: repeat(3, 1fr); }
   .insta-grid { grid-template-columns: repeat(6, 1fr); }
   .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.2fr; }
+}
+
+/* ---------- Erweiterte Effekte (GSAP-gestützt, optional) ---------- */
+.gallery-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  width: 3.1rem;
+  height: 3.1rem;
+  border-radius: 50%;
+  background: rgba(13, 29, 22, .62);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  opacity: 0;
+  transform: scale(.7);
+  pointer-events: none;
+}
+.gallery-cursor svg { width: 1.15rem; height: 1.15rem; }
+@media (hover: none), (pointer: coarse) {
+  .gallery-cursor { display: none; }
+}
+
+/* Magnetische Buttons: will-change nur auf den wenigen Ziel-Elementen, damit
+   der Compositor sie nicht dauerhaft für die ganze Seite vorhält. */
+@media (hover: hover) and (pointer: fine) {
+  .hero .btn--lime,
+  .cta-band .btn--lime {
+    will-change: transform;
+  }
 }
 
 /* ---------- Reduzierte Bewegung ---------- */

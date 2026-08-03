@@ -28,6 +28,10 @@
   <link rel="preload" href="../assets/fonts/inter-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../css/main.css">
   <script src="../js/main.js" defer></script>
+  <!-- Erweiterte Effekte: rein progressiv, ohne diese 3 Dateien funktioniert die Seite unverändert -->
+  <script src="../assets/js/vendor/gsap/gsap.min.js" defer></script>
+  <script src="../assets/js/vendor/gsap/SplitText.min.js" defer></script>
+  <script src="../assets/js/effects.js" defer></script>
 
   <script type="application/ld+json">
   {
@@ -106,7 +110,7 @@
     <!-- PLATZHALTER: Ort & Beschreibung durch echte Projektdaten ersetzen, sobald geliefert -->
     <section class="section ref" id="zaunbau" aria-labelledby="zaunbau-title">
       <div class="container ref-grid">
-        <a class="ref-media reveal reveal--left" href="../assets/img/zaunbau-1200.jpg" data-lightbox="zaunbau" data-caption="Doppelstabmattenzaun mit vorbereitetem Pflanzstreifen – Region Kyffhäuserkreis" data-alt="Doppelstabmattenzaun entlang eines Gartens, großformatige Ansicht">
+        <a class="ref-media reveal reveal--curtain" href="../assets/img/zaunbau-1200.jpg" data-lightbox="zaunbau" data-caption="Doppelstabmattenzaun mit vorbereitetem Pflanzstreifen – Region Kyffhäuserkreis" data-alt="Doppelstabmattenzaun entlang eines Gartens, großformatige Ansicht">
           <picture>
             <source type="image/avif" srcset="../assets/img/zaunbau-480.avif 480w, ../assets/img/zaunbau-800.avif 800w" sizes="(min-width: 56em) 500px, 100vw">
             <source type="image/webp" srcset="../assets/img/zaunbau-480.webp 480w, ../assets/img/zaunbau-800.webp 800w" sizes="(min-width: 56em) 500px, 100vw">
@@ -130,7 +134,7 @@
     <!-- ================= Projekt 2: Abbruch ================= -->
     <section class="section section--soft ref" id="abbruch" aria-labelledby="abbruch-title">
       <div class="container ref-grid ref-grid--flip">
-        <a class="ref-media reveal reveal--right" href="../assets/img/abriss-rueckbau-1200.jpg" data-lightbox="abbruch" data-caption="Kontrollierter Rückbau eines Nebengebäudes mit Minibagger – Region Kyffhäuserkreis" data-alt="Minibagger beim Abriss eines Nebengebäudes, großformatige Ansicht">
+        <a class="ref-media reveal reveal--curtain" href="../assets/img/abriss-rueckbau-1200.jpg" data-lightbox="abbruch" data-caption="Kontrollierter Rückbau eines Nebengebäudes mit Minibagger – Region Kyffhäuserkreis" data-alt="Minibagger beim Abriss eines Nebengebäudes, großformatige Ansicht">
           <picture>
             <source type="image/avif" srcset="../assets/img/abriss-rueckbau-480.avif 480w, ../assets/img/abriss-rueckbau-800.avif 800w" sizes="(min-width: 56em) 500px, 100vw">
             <source type="image/webp" srcset="../assets/img/abriss-rueckbau-480.webp 480w, ../assets/img/abriss-rueckbau-800.webp 800w" sizes="(min-width: 56em) 500px, 100vw">
@@ -154,7 +158,7 @@
     <!-- ================= Projekt 3: Dachpflege ================= -->
     <section class="section ref" id="dachpflege" aria-labelledby="dachpflege-title">
       <div class="container ref-grid">
-        <a class="ref-media reveal reveal--left" href="../assets/img/dachpflege-1200.jpg" data-lightbox="dachpflege" data-caption="Dachpflege an einem Einfamilienhaus – Region Erfurt" data-alt="Leiter an der Hausfassade während der Dachpflege, großformatige Ansicht">
+        <a class="ref-media reveal reveal--curtain" href="../assets/img/dachpflege-1200.jpg" data-lightbox="dachpflege" data-caption="Dachpflege an einem Einfamilienhaus – Region Erfurt" data-alt="Leiter an der Hausfassade während der Dachpflege, großformatige Ansicht">
           <picture>
             <source type="image/avif" srcset="../assets/img/dachpflege-480.avif 480w, ../assets/img/dachpflege-800.avif 800w" sizes="(min-width: 56em) 500px, 100vw">
             <source type="image/webp" srcset="../assets/img/dachpflege-480.webp 480w, ../assets/img/dachpflege-800.webp 800w" sizes="(min-width: 56em) 500px, 100vw">
