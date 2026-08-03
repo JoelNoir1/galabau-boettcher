@@ -28,6 +28,10 @@
   <link rel="preload" href="../assets/fonts/inter-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../css/main.css">
   <script src="../js/main.js" defer></script>
+  <!-- Erweiterte Effekte: rein progressiv, ohne diese 3 Dateien funktioniert die Seite unverändert -->
+  <script src="../assets/js/vendor/gsap/gsap.min.js" defer></script>
+  <script src="../assets/js/vendor/gsap/SplitText.min.js" defer></script>
+  <script src="../assets/js/effects.js" defer></script>
 
   <script type="application/ld+json">
   {
@@ -107,7 +111,7 @@
     <!-- ================= 01 Pflaster & Wegebau ================= -->
     <section class="section detail" id="pflaster" aria-labelledby="pflaster-title">
       <div class="container detail-grid">
-        <div class="detail-grid__media reveal reveal--left">
+        <div class="detail-grid__media reveal reveal--curtain">
           <picture>
             <source type="image/avif" srcset="../assets/img/pflaster-wegebau-480.avif 480w, ../assets/img/pflaster-wegebau-800.avif 800w, ../assets/img/pflaster-wegebau-1200.avif 1200w" sizes="(min-width: 56em) 560px, 100vw">
             <source type="image/webp" srcset="../assets/img/pflaster-wegebau-480.webp 480w, ../assets/img/pflaster-wegebau-800.webp 800w, ../assets/img/pflaster-wegebau-1200.webp 1200w" sizes="(min-width: 56em) 560px, 100vw">
@@ -132,7 +136,7 @@
     <!-- ================= 02 Außenanlagen & Zaunbau ================= -->
     <section class="section section--soft detail" id="aussenanlagen" aria-labelledby="aussenanlagen-title">
       <div class="container detail-grid detail-grid--flip">
-        <div class="detail-grid__media reveal reveal--right">
+        <div class="detail-grid__media reveal reveal--curtain">
           <picture>
             <source type="image/avif" srcset="../assets/img/zaunbau-480.avif 480w, ../assets/img/zaunbau-800.avif 800w" sizes="(min-width: 56em) 560px, 100vw">
             <source type="image/webp" srcset="../assets/img/zaunbau-480.webp 480w, ../assets/img/zaunbau-800.webp 800w" sizes="(min-width: 56em) 560px, 100vw">
@@ -157,7 +161,7 @@
     <!-- ================= 03 Grünpflege ================= -->
     <section class="section detail" id="gruenpflege" aria-labelledby="gruenpflege-title">
       <div class="container detail-grid">
-        <div class="detail-grid__media reveal reveal--left">
+        <div class="detail-grid__media reveal reveal--curtain">
           <picture>
             <source type="image/avif" srcset="../assets/img/gruenpflege-480.avif 480w, ../assets/img/gruenpflege-800.avif 800w, ../assets/img/gruenpflege-1200.avif 1200w" sizes="(min-width: 56em) 560px, 100vw">
             <source type="image/webp" srcset="../assets/img/gruenpflege-480.webp 480w, ../assets/img/gruenpflege-800.webp 800w, ../assets/img/gruenpflege-1200.webp 1200w" sizes="(min-width: 56em) 560px, 100vw">
@@ -181,7 +185,7 @@
     <!-- ================= 04 Erd- & Baggerarbeiten ================= -->
     <section class="section section--soft detail" id="erdarbeiten" aria-labelledby="erdarbeiten-title">
       <div class="container detail-grid detail-grid--flip">
-        <div class="detail-grid__media reveal reveal--right">
+        <div class="detail-grid__media reveal reveal--curtain">
           <picture>
             <source type="image/avif" srcset="../assets/img/erd-baggerarbeiten-480.avif 480w, ../assets/img/erd-baggerarbeiten-800.avif 800w, ../assets/img/erd-baggerarbeiten-1200.avif 1200w" sizes="(min-width: 56em) 560px, 100vw">
             <source type="image/webp" srcset="../assets/img/erd-baggerarbeiten-480.webp 480w, ../assets/img/erd-baggerarbeiten-800.webp 800w, ../assets/img/erd-baggerarbeiten-1200.webp 1200w" sizes="(min-width: 56em) 560px, 100vw">
@@ -205,7 +209,7 @@
     <!-- ================= 05 Abbruch & Rückbau ================= -->
     <section class="section detail" id="abbruch" aria-labelledby="abbruch-title">
       <div class="container detail-grid">
-        <div class="detail-grid__media reveal reveal--left">
+        <div class="detail-grid__media reveal reveal--curtain">
           <picture>
             <source type="image/avif" srcset="../assets/img/abriss-rueckbau-neu-480.avif 480w, ../assets/img/abriss-rueckbau-neu-800.avif 800w, ../assets/img/abriss-rueckbau-neu-1200.avif 1200w" sizes="(min-width: 56em) 560px, 100vw">
             <source type="image/webp" srcset="../assets/img/abriss-rueckbau-neu-480.webp 480w, ../assets/img/abriss-rueckbau-neu-800.webp 800w, ../assets/img/abriss-rueckbau-neu-1200.webp 1200w" sizes="(min-width: 56em) 560px, 100vw">
@@ -229,7 +233,7 @@
     <!-- ================= 06 Entwässerung & Sanierung ================= -->
     <section class="section section--soft detail" id="entwaesserung" aria-labelledby="entwaesserung-title">
       <div class="container detail-grid detail-grid--flip">
-        <div class="detail-grid__media reveal reveal--right">
+        <div class="detail-grid__media reveal reveal--curtain">
           <picture>
             <source type="image/avif" srcset="../assets/img/entwaesserung-sanierung-480.avif 480w, ../assets/img/entwaesserung-sanierung-800.avif 800w, ../assets/img/entwaesserung-sanierung-1200.avif 1200w" sizes="(min-width: 56em) 560px, 100vw">
             <source type="image/webp" srcset="../assets/img/entwaesserung-sanierung-480.webp 480w, ../assets/img/entwaesserung-sanierung-800.webp 800w, ../assets/img/entwaesserung-sanierung-1200.webp 1200w" sizes="(min-width: 56em) 560px, 100vw">
