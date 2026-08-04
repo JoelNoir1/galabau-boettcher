@@ -95,7 +95,18 @@
       },
       { rootMargin: "0px 0px -10% 0px", threshold: 0.08 }
     );
-    reveals.forEach((el) => io.observe(el));
+    reveals.forEach((el) => {
+      // Curtain-Bilder werden erst JETZT (aktiv, nur in diesem sicher laufenden
+      // Zweig) versteckt — bleiben also sichtbar, falls dieser Code nie läuft.
+      if (el.classList.contains("reveal--curtain")) el.classList.add("curtain-armed");
+      io.observe(el);
+    });
+    // Sicherheitsnetz: Sollte der Observer aus irgendeinem Grund nie feuern
+    // (z. B. Tab im Hintergrund, Browser-Eigenheit), Bilder spätestens nach
+    // 2,5s trotzdem einblenden statt dauerhaft versteckt zu lassen.
+    setTimeout(() => {
+      $$(".reveal--curtain.curtain-armed:not(.in)").forEach((el) => el.classList.add("in"));
+    }, 2500);
   } else {
     reveals.forEach((el) => el.classList.add("in"));
   }
