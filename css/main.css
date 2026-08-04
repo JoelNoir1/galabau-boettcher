@@ -1506,7 +1506,12 @@ html.js .reveal.in {
 
 /* Curtain-Reveal: eigene, vollständige Sichtbarkeitslogik über clip-path statt
    opacity/translate — ersetzt reveal--left/--right/--zoom auf demselben Element
-   (nicht kombinieren). Für großformatige Projekt- und Detailbilder. */
+   (nicht kombinieren). Für großformatige Projekt- und Detailbilder.
+   Sicherer Fallback: Bilder sind IMMER sichtbar (clip-path: keine Clip-Fläche),
+   solange main.js nicht aktiv die .curtain-armed-Klasse setzt (siehe main.js) —
+   nur dann existiert überhaupt ein versteckter Zwischenzustand, aus dem heraus
+   animiert eingeblendet wird. Fällt main.js aus (blockiert, deaktiviert, Fehler,
+   IntersectionObserver feuert nie), bleibt das Bild von Anfang an sichtbar. */
 html.js .reveal--curtain {
   opacity: 1;
   transform: none;
@@ -1514,7 +1519,7 @@ html.js .reveal--curtain {
   transition: clip-path 1.05s var(--ease);
   transition-delay: var(--reveal-delay, 0s);
 }
-html.js .reveal--curtain:not(.in) {
+html.js .reveal--curtain.curtain-armed:not(.in) {
   clip-path: inset(0 0 0 101% round var(--radius));
 }
 
