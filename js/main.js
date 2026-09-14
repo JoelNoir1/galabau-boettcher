@@ -8,21 +8,27 @@
 
   /* ------------------------------------------------------------------
      Konfiguration
-     formEndpoint: URL des Formular-Empfängers (PHP-Skript, Web3Forms …).
-     Solange leer, öffnet das Formular als Fallback das E-Mail-Programm
-     mit vorbefüllter Nachricht (mailto).
 
-     Anbindung später — zwei Beispiele:
-     1) Eigenes PHP auf klassischem Webhosting:
-        formEndpoint: "/kontakt.php"   (POST, Felder: name, email, phone,
-        service, message)
-     2) Web3Forms (https://web3forms.com, kostenloser Access-Key):
-        formEndpoint: "https://api.web3forms.com/submit"
-        und unten im HTML das hidden-Feld access_key einkommentieren.
+     Das Kontaktformular wird über Web3Forms zugestellt (statische Seite,
+     kein eigener Server, kein Konto, keine Cookies, kein Tracking).
+
+     Scharf geschaltet wird die Zustellung NICHT hier, sondern über das
+     hidden-Feld <input name="access_key"> im Formular:
+       · access_key gefüllt  -> echte Zustellung per POST an Web3Forms
+       · access_key leer     -> Fallback, öffnet das E-Mail-Programm (mailto)
+     Dadurch kann der Key eingetragen werden, ohne JavaScript anzufassen,
+     und ein vergessener Key führt nicht zu stillschweigend verlorenen
+     Anfragen, sondern zum funktionierenden mailto-Weg.
+
+     Alternative für klassisches Hosting mit PHP: formEndpoint auf das
+     eigene Skript setzen (z. B. "/kontakt.php") und requiresAccessKey auf
+     false stellen.
   ------------------------------------------------------------------ */
   const CONFIG = {
-    formEndpoint: "",
+    formEndpoint: "https://api.web3forms.com/submit",
+    requiresAccessKey: true,
     email: "galabauboettcher@gmx.de",
+    phone: "0152 33991890",
   };
 
   const motionOK = window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
@@ -155,22 +161,6 @@
       { threshold: 0.25 }
     );
     io.observe(timeline);
-  }
-
-  /* ---------- Dezenter Parallax im Hero ---------- */
-  const heroBg = $(".hero__bg");
-  if (heroBg && motionOK && window.matchMedia("(min-width: 56em)").matches) {
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const y = Math.min(window.scrollY, window.innerHeight);
-      heroBg.style.transform = `translateY(${y * 0.16}px)`;
-    };
-    window.addEventListener(
-      "scroll",
-      () => { if (!raf) raf = requestAnimationFrame(update); },
-      { passive: true }
-    );
   }
 
   /* ---------- Bewertungs-Slider: Punkte (mobil) ---------- */
@@ -392,9 +382,14 @@
         message: form.elements.message.value.trim(),
       };
 
-      if (CONFIG.formEndpoint) {
+      const accessKey = form.elements.access_key ? form.elements.access_key.value.trim() : "";
+      const canSend = Boolean(CONFIG.formEndpoint) && (!CONFIG.requiresAccessKey || accessKey);
+
+      if (canSend) {
         const btn = $("button[type=submit]", form);
+        const btnLabel = btn.innerHTML;
         btn.disabled = true;
+        btn.textContent = "Wird gesendet …";
         try {
           const body = new FormData(form);
           const res = await fetch(CONFIG.formEndpoint, {
@@ -406,9 +401,10 @@
           showStatus("success", "Vielen Dank für Ihre Anfrage! Wir melden uns schnellstmöglich – in der Regel innerhalb von 24 Stunden.");
           form.reset();
         } catch (err) {
-          showStatus("error", "Senden fehlgeschlagen. Bitte rufen Sie uns an (0152 33991890) oder schreiben Sie direkt an " + CONFIG.email + ".");
+          showStatus("error", "Senden fehlgeschlagen. Bitte rufen Sie uns an (" + CONFIG.phone + ") oder schreiben Sie direkt an " + CONFIG.email + ".");
         } finally {
           btn.disabled = false;
+          btn.innerHTML = btnLabel;
         }
       } else {
         /* Fallback ohne Endpoint: E-Mail-Programm mit vorbefüllter Nachricht */

@@ -67,7 +67,9 @@
   /* Typografie */
   --font-display: "Manrope", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
-  --fs-h1: clamp(2.55rem, 1.1rem + 6.2vw, 4.7rem);
+  /* Untergrenze bewusst niedrig: bei 320 px Viewport passt "Außenanlagen"
+     sonst nicht mehr in eine Zeile und läuft aus dem Bild. */
+  --fs-h1: clamp(2.1rem, 1.05rem + 5.2vw, 4.3rem);
   --fs-h2: clamp(1.9rem, 1.3rem + 2.7vw, 2.9rem);
   --fs-h3: clamp(1.22rem, 1.08rem + .6vw, 1.5rem);
   --fs-lead: clamp(1.05rem, .98rem + .35vw, 1.24rem);
@@ -137,7 +139,15 @@ h1, h2, h3, h4 {
   letter-spacing: -.015em;
   text-wrap: balance;
 }
-h1 { font-size: var(--fs-h1); line-height: 1.04; letter-spacing: -.022em; }
+h1 {
+  font-size: var(--fs-h1);
+  line-height: 1.04;
+  letter-spacing: -.022em;
+  /* Lange Komposita ("Außenanlagen") dürfen auf schmalen Displays umbrechen,
+     statt horizontales Scrollen zu erzeugen. */
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
 h2 { font-size: var(--fs-h2); }
 h3 { font-size: var(--fs-h3); }
 
@@ -287,12 +297,12 @@ button { font: inherit; cursor: pointer; }
   gap: 1.25rem;
   height: var(--header-h);
 }
+/* Bewusst deckend statt Glaseffekt: ruhiger, besserer Textkontrast und
+   kein Compositing-Aufwand beim Scrollen. */
 .site-header.is-scrolled {
   --hdr-text: var(--text);
-  background: color-mix(in srgb, var(--bg) 86%, transparent);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  backdrop-filter: blur(14px) saturate(1.4);
-  box-shadow: 0 1px 0 var(--line), 0 8px 30px rgba(13, 29, 22, .06);
+  background: var(--bg);
+  box-shadow: 0 1px 0 var(--line), 0 6px 22px rgba(13, 29, 22, .07);
 }
 
 .brand {
@@ -314,12 +324,19 @@ button { font: inherit; cursor: pointer; }
 .brand__name {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 1.06rem;
   line-height: 1.15;
   letter-spacing: -.01em;
   white-space: nowrap;
+}
+/* Sehr schmale Displays: Zusatzzeile weglassen, bevor der Header überläuft */
+@media (max-width: 22em) {
+  .brand__name { font-size: .98rem; }
+  .brand__name small { display: none; }
+  .brand__logo { height: 2.1rem; }
 }
 .brand__name small {
   font: 600 .66rem/1.3 var(--font-body);
@@ -391,6 +408,7 @@ body.nav-open .mobile-nav {
 .mobile-nav ul { display: grid; gap: .4rem; }
 .mobile-nav a.mobile-nav__link {
   display: inline-block;
+  padding-block: .3rem;
   font: 800 clamp(1.7rem, 6.5vw, 2.4rem)/1.3 var(--font-display);
   letter-spacing: -.015em;
   color: var(--text-on-dark);
@@ -417,38 +435,24 @@ body.nav-open { overflow: hidden; }
   position: relative;
   display: grid;
   align-items: center;
-  min-height: max(100svh, 620px);
-  padding: calc(var(--header-h) + 3rem) 0 5.5rem;
+  padding: calc(var(--header-h) + 2.5rem) 0 4rem;
   overflow: clip;
   background:
-    radial-gradient(1100px 560px at 78% -8%, rgba(151, 171, 41, .17), transparent 60%),
-    radial-gradient(900px 500px at -10% 110%, rgba(37, 75, 102, .28), transparent 55%),
+    radial-gradient(1100px 560px at 78% -8%, rgba(151, 171, 41, .15), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(37, 75, 102, .26), transparent 55%),
     linear-gradient(168deg, var(--c-forest-950) 0%, var(--c-forest) 52%, var(--c-forest-600) 100%);
   color: var(--text-on-dark);
 }
-.hero__bg {
-  position: absolute;
-  inset: -12% 0;
-  pointer-events: none;
-  will-change: transform;
-}
-.hero__bg svg { width: 100%; height: 100%; }
-/* Für den späteren Foto-Tausch: <picture class="hero__photo"> einsetzen */
-.hero__photo {
-  position: absolute;
-  inset: 0;
-}
-.hero__photo img { width: 100%; height: 100%; object-fit: cover; }
-.hero__photo::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(13, 29, 22, .55), rgba(13, 29, 22, .35) 45%, rgba(13, 29, 22, .78));
-}
-.hero__content {
+/* Zweispaltiges Layout: Text links, echtes Projektfoto rechts. Das Foto sitzt
+   bewusst in einer eigenen Fläche statt als Vollflächen-Hintergrund – so
+   braucht es keinen erzwungenen Beschnitt und bleibt in voller Schärfe. */
+.hero__inner {
   position: relative;
-  max-width: 60rem;
+  display: grid;
+  gap: clamp(2.2rem, 5vw, 3.5rem);
+  align-items: center;
 }
+.hero__content { min-width: 0; }
 .hero .eyebrow { color: var(--c-lime-bright); }
 .hero h1 { margin-bottom: .35em; color: #fff; max-width: 16ch; }
 .hero__lead {
@@ -475,6 +479,47 @@ body.nav-open { overflow: hidden; }
 }
 .hero__actions { display: flex; flex-wrap: wrap; gap: .9rem; }
 
+/* Vertrauenszeile direkt unter den Buttons: nur belegbare Angaben */
+.hero__proof {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .35rem .85rem;
+  margin: 1.9rem 0 0;
+  font-size: .92rem;
+  color: var(--text-soft-on-dark);
+}
+.hero__proof strong { color: #fff; font-family: var(--font-display); font-size: 1rem; }
+.hero__proof-g { width: 1.1rem; height: 1.1rem; flex: none; }
+/* Bewusst ohne Trennzeichen: die Zeile bricht auf schmalen Displays um, ein
+   Trennpunkt bliebe dann am Zeilenende hängen. Der Abstand trennt genug. */
+.hero__proof span { white-space: nowrap; }
+
+.hero__figure {
+  position: relative;
+  margin: 0;
+  display: grid;
+  gap: .85rem;
+  justify-items: start;
+}
+.hero__figure picture { display: block; width: 100%; }
+.hero__figure img {
+  width: 100%;
+  /* Mobil flacher, damit der Hero nicht zur Endlosfläche wird; ab Tablet
+     wieder das ursprüngliche Hochformat des Fotos. Oben ausgerichtet, damit
+     im flachen Ausschnitt Himmel und Bepflanzung sichtbar bleiben und nicht
+     nur die Steintextur. */
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 50% 12%;
+  border-radius: calc(var(--radius) + 4px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .4);
+}
+.hero__figure figcaption {
+  font: 500 .86rem/1.5 var(--font-body);
+  color: var(--text-soft-on-dark);
+}
+
 .scroll-hint {
   position: absolute;
   left: 50%;
@@ -490,6 +535,9 @@ body.nav-open { overflow: hidden; }
 }
 .scroll-hint:hover { color: #fff; border-color: rgba(255, 255, 255, .7); }
 .scroll-hint svg { width: 1rem; height: 1rem; }
+/* Mobil überflüssig (Hero endet dort ohnehin im Sichtbereich) und würde mit
+   der Schnellkontakt-Leiste kollidieren. */
+@media (max-width: 55.999em) { .scroll-hint { display: none; } }
 @keyframes hint-bob {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(7px); }
@@ -504,31 +552,40 @@ body.nav-open { overflow: hidden; }
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: .9rem;
-  padding: 1.9rem 1.7rem;
   background: var(--bg-card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
+  overflow: hidden;
   box-shadow: var(--shadow-sm);
   transition: transform var(--t-med), box-shadow var(--t-med), border-color var(--t-med);
 }
 .service-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
   border-color: color-mix(in srgb, var(--c-lime) 45%, var(--line));
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
 }
-.service-card__icon {
-  display: grid;
-  place-items: center;
-  width: 3.3rem; height: 3.3rem;
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--c-lime) 16%, var(--bg-card));
-  color: var(--c-forest);
+/* Foto statt Icon: zeigt die Leistung an einer echten Baustelle */
+.service-card__media {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-soft);
 }
-:root[data-theme="dark"] .service-card__icon { color: var(--c-lime-bright); }
-.service-card__icon svg { width: 1.65rem; height: 1.65rem; }
+.service-card__media img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform .9s var(--ease);
+}
+.service-card:hover .service-card__media img { transform: scale(1.04); }
+.service-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+  flex: 1;
+  padding: 1.5rem 1.5rem 1.7rem;
+}
 .service-card h3 { margin: 0; }
-.service-card > p { color: var(--text-soft); font-size: .96rem; margin: 0; }
+.service-card__body > p { color: var(--text-soft); font-size: .96rem; margin: 0; }
 .service-card__tags {
   display: flex;
   flex-wrap: wrap;
@@ -547,28 +604,36 @@ body.nav-open { overflow: hidden; }
 .service-card .link-arrow { margin-top: auto; padding-top: .6rem; font-size: .92rem; }
 .service-card__stretch::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
 
-/* ---------- Zahlen-Band ---------- */
-.stats {
-  position: relative;
-  overflow: clip;
-}
-.stats__grid {
+/* ---------- Vertrauensband ----------
+   Ersetzt das frühere Zahlen-Band. Bewusst ohne Kennzahlen: es steht nur
+   drin, was nachprüfbar ist (Google-Profil, Inhaber, Einsatzgebiet, Kanal). */
+.trust__grid {
   display: grid;
-  gap: 2.2rem;
-  text-align: center;
+  gap: 1rem;
 }
-.stat__value {
-  font: 800 clamp(2.7rem, 2rem + 3.4vw, 4.2rem)/1 var(--font-display);
-  letter-spacing: -.02em;
-  color: var(--c-lime-bright);
-  font-variant-numeric: tabular-nums;
+.trust__item {
+  display: grid;
+  gap: .45rem;
+  padding: 1.5rem 1.4rem;
+  border: 1px solid var(--c-line-dark);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, .04);
+  color: var(--text-soft-on-dark);
+  transition: background var(--t-fast), border-color var(--t-fast);
 }
-.stat__label {
-  margin-top: .5rem;
-  font: 600 1rem/1.4 var(--font-body);
+a.trust__item:hover {
+  background: rgba(255, 255, 255, .08);
+  border-color: rgba(151, 171, 41, .5);
+  color: var(--text-soft-on-dark);
+}
+.trust__item > svg { width: 1.7rem; height: 1.7rem; color: var(--c-lime-bright); }
+.trust__item .trust__g { color: inherit; }
+.trust__item strong {
+  font: 800 1.08rem/1.3 var(--font-display);
+  letter-spacing: -.01em;
   color: var(--text-on-dark);
 }
-.stat__sub { font-size: .88rem; color: var(--text-soft-on-dark); }
+.trust__item span { font-size: .93rem; }
 
 /* ---------- Projektkarten ---------- */
 .projects-grid { display: grid; gap: 1.25rem; }
@@ -626,9 +691,7 @@ body.nav-open { overflow: hidden; }
   place-items: center;
   width: 2.7rem; height: 2.7rem;
   border-radius: 50%;
-  background: rgba(255, 255, 255, .14);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  background: rgba(13, 29, 22, .55);
   color: #fff;
   opacity: 0;
   transform: translateY(6px);
@@ -1162,7 +1225,7 @@ a.contact-note:hover {
   gap: 2.4rem;
   margin-bottom: 3rem;
 }
-.site-footer h4 {
+.site-footer h3 {
   margin-bottom: 1rem;
   font: 700 .82rem/1.3 var(--font-body);
   letter-spacing: .14em;
@@ -1287,9 +1350,7 @@ a.contact-note:hover {
   place-items: center;
   width: 2.6rem; height: 2.6rem;
   border-radius: 50%;
-  background: rgba(13, 29, 22, .55);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  background: rgba(13, 29, 22, .72);
   color: #fff;
 }
 .ref-media__zoom svg { width: 1.15rem; height: 1.15rem; }
@@ -1304,6 +1365,18 @@ a.contact-note:hover {
 .ref-meta svg { width: 1em; height: 1em; color: var(--c-lime-deep); }
 
 /* ---------- Vorher/Nachher-Slider ---------- */
+/* Rahmen für den Slider auf der Startseite (Überschrift + Regler nebeneinander) */
+.ba-block {
+  display: grid;
+  gap: 1.6rem;
+  margin-top: clamp(2.2rem, 5vw, 3.2rem);
+  padding-top: clamp(2.2rem, 5vw, 3.2rem);
+  border-top: 1px solid var(--line);
+  align-items: center;
+}
+.ba-block__head h3 { margin: .3em 0 .4em; font-size: var(--fs-h3); }
+.ba-block__head p { color: var(--text-soft); font-size: .97rem; max-width: 34rem; }
+
 .ba {
   position: relative;
   border-radius: var(--radius);
@@ -1323,7 +1396,8 @@ a.contact-note:hover {
   0%, 100% { --pos: 50%; }
   48%, 58% { --pos: 64%; }
 }
-html.js .ba.reveal.in {
+html.js .ba.reveal.in,
+html.js .reveal.in > .ba {
   animation: ba-sweep 2.6s cubic-bezier(.65, 0, .35, 1) .5s 1 both;
 }
 .ba.ba--interacted { animation: none !important; }
@@ -1339,14 +1413,25 @@ html.js .ba.reveal.in {
   inset: 0;
   clip-path: inset(0 calc(100% - var(--pos)) 0 0);
 }
+/* Griff: sichtbar bleibt die 2-px-Linie (::before), die Trefferfläche ist
+   bewusst 2,9rem breit, damit sie sich auf dem Touchscreen greifen lässt. */
 .ba__handle {
   position: absolute;
   top: 0; bottom: 0;
   left: var(--pos);
+  width: 2.9rem;
+  margin-left: -1.45rem;
+  background: transparent;
+  cursor: ew-resize;
+}
+.ba__handle::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
   width: 2px;
   margin-left: -1px;
   background: #fff;
-  cursor: ew-resize;
 }
 .ba__handle::after {
   content: "";
@@ -1374,9 +1459,7 @@ html.js .ba.reveal.in {
   z-index: 2;
   padding: .4em .95em;
   border-radius: 999px;
-  background: rgba(13, 29, 22, .6);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  background: rgba(13, 29, 22, .78);
   color: #fff;
   font: 600 .8rem/1.3 var(--font-body);
   letter-spacing: .06em;
@@ -1528,18 +1611,18 @@ html.js .reveal--curtain.curtain-armed:not(.in) {
   from { opacity: 0; transform: translateY(26px); }
 }
 .hero__content > * { animation: rise .85s var(--ease) backwards; }
-.hero__content > *:nth-child(1) { animation-delay: .08s; }
-.hero__content > *:nth-child(2) { animation-delay: .18s; }
-.hero__content > *:nth-child(3) { animation-delay: .28s; }
-.hero__content > *:nth-child(4) { animation-delay: .38s; }
-.hero__content > *:nth-child(5) { animation-delay: .48s; }
+.hero__content > *:nth-child(1) { animation-delay: .06s; }
+.hero__content > *:nth-child(2) { animation-delay: .14s; }
+.hero__content > *:nth-child(3) { animation-delay: .22s; }
+.hero__content > *:nth-child(4) { animation-delay: .30s; }
+.hero__content > *:nth-child(5) { animation-delay: .38s; }
+.hero__content > *:nth-child(6) { animation-delay: .46s; }
+/* Bild kommt zuletzt und nur als ruhiges Aufblenden – kein zweiter Versatz,
+   damit im Hero genau eine Bewegung stattfindet. */
+@keyframes hero-fade { from { opacity: 0; } }
+.hero__figure { animation: hero-fade 1s var(--ease) .2s backwards; }
 
 /* ---------- Mikroanimationen ---------- */
-.service-card__icon { transition: transform var(--t-med), background var(--t-med); }
-.service-card:hover .service-card__icon {
-  transform: translateY(-4px) scale(1.06);
-  background: color-mix(in srgb, var(--c-lime) 26%, var(--bg-card));
-}
 .chip { transition: border-color var(--t-fast); }
 .service-card:hover .chip { border-color: color-mix(in srgb, var(--c-lime) 38%, var(--line)); }
 .feature__icon { transition: transform var(--t-med), background var(--t-med); }
@@ -1566,7 +1649,7 @@ html.js .reveal--curtain.curtain-armed:not(.in) {
   .features-grid { grid-template-columns: repeat(2, 1fr); }
   .projects-grid { grid-template-columns: repeat(2, 1fr); }
   .insta-grid { grid-template-columns: repeat(3, 1fr); }
-  .stats__grid { grid-template-columns: repeat(3, 1fr); }
+  .trust__grid { grid-template-columns: repeat(2, 1fr); }
   .contact-grid { grid-template-columns: 5fr 6fr; }
   .form-grid--2 { grid-template-columns: 1fr 1fr; }
   .form-grid--2 .field--full { grid-column: 1 / -1; }
@@ -1575,6 +1658,17 @@ html.js .reveal--curtain.curtain-armed:not(.in) {
 }
 
 @media (min-width: 56em) {
+  /* Hero: Text und Projektfoto nebeneinander */
+  .hero { min-height: max(100svh, 640px); padding-bottom: 5.5rem; }
+  .hero__inner {
+    grid-template-columns: minmax(0, 1fr) 34rem;
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+  }
+  .hero__figure img { aspect-ratio: 4 / 5; object-position: 50% 50%; }
+
+  .ba-block { grid-template-columns: 5fr 7fr; gap: clamp(2rem, 4vw, 3.5rem); }
+  .ba-block__head { margin-bottom: 0; }
+
   .main-nav { display: block; }
   .main-nav ul { display: flex; gap: clamp(1.1rem, 2.4vw, 2rem); }
   .main-nav a {
@@ -1660,40 +1754,52 @@ html.js .reveal--curtain.curtain-armed:not(.in) {
   .features-grid { grid-template-columns: repeat(3, 1fr); }
   .projects-grid { grid-template-columns: repeat(3, 1fr); }
   .insta-grid { grid-template-columns: repeat(6, 1fr); }
+  .trust__grid { grid-template-columns: repeat(4, 1fr); }
   .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.2fr; }
 }
 
-/* ---------- Erweiterte Effekte (GSAP-gestützt, optional) ---------- */
-.gallery-cursor {
+/* ---------- Mobiler Schnellkontakt ----------
+   Nur zwei echte Kontaktwege, feste Leiste am unteren Rand, ausschließlich
+   unterhalb der Desktop-Navigation (dort stehen Telefonnummer und CTA bereits
+   im Header). Blendet sich aus, solange das mobile Menü offen ist. */
+.quick-contact {
   position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 50;
-  display: grid;
-  place-items: center;
-  width: 3.1rem;
-  height: 3.1rem;
-  border-radius: 50%;
-  background: rgba(13, 29, 22, .62);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 55;
+  display: flex;
+  gap: .6rem;
+  padding: .6rem var(--gutter) calc(.6rem + env(safe-area-inset-bottom));
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -4px 20px rgba(13, 29, 22, .08);
+}
+.quick-contact__btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5em;
+  /* min-height sichert das 44-px-Touchziel ab */
+  min-height: 2.9rem;
+  padding: .7em 1em;
+  border-radius: 999px;
+  font: 700 .95rem/1.2 var(--font-display);
+  background: var(--brand);
   color: #fff;
-  opacity: 0;
-  transform: scale(.7);
-  pointer-events: none;
 }
-.gallery-cursor svg { width: 1.15rem; height: 1.15rem; }
-@media (hover: none), (pointer: coarse) {
-  .gallery-cursor { display: none; }
-}
+.quick-contact__btn svg { width: 1.15em; height: 1.15em; flex: none; }
+.quick-contact__btn--wa { background: var(--c-lime); color: var(--c-forest-950); }
+.quick-contact__btn:hover { color: #fff; }
+.quick-contact__btn--wa:hover { color: var(--c-forest-950); }
+body.nav-open .quick-contact { display: none; }
 
-/* Magnetische Buttons: will-change nur auf den wenigen Ziel-Elementen, damit
-   der Compositor sie nicht dauerhaft für die ganze Seite vorhält. */
-@media (hover: hover) and (pointer: fine) {
-  .hero .btn--lime,
-  .cta-band .btn--lime {
-    will-change: transform;
-  }
+/* Platz für die Leiste, damit sie nichts überdeckt */
+@media (max-width: 55.999em) {
+  body { padding-bottom: 4.4rem; }
+}
+@media (min-width: 56em) {
+  .quick-contact { display: none; }
 }
 
 /* ---------- Reduzierte Bewegung ---------- */
