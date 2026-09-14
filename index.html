@@ -506,7 +506,7 @@
           <li class="step reveal">
             <span class="step__num" aria-hidden="true">01</span>
             <h3>Anfrage</h3>
-            <p>Kurz anrufen oder das Formular ausfüllen – wir melden uns zeitnah zurück.</p>
+            <p>Kurz anrufen oder per WhatsApp schreiben – wir melden uns zeitnah zurück.</p>
           </li>
           <li class="step reveal">
             <span class="step__num" aria-hidden="true">02</span>
@@ -666,7 +666,7 @@
         <div class="section-head reveal">
           <p class="eyebrow">Kontakt</p>
           <h2 id="kontakt-title">Erzählen Sie uns von Ihrem Projekt.</h2>
-          <p>Anruf, E-Mail oder Formular – wir melden uns in der Regel innerhalb von 24 Stunden zurück.</p>
+          <p>WhatsApp, Anruf oder E-Mail – wir melden uns in der Regel innerhalb von 24 Stunden zurück.</p>
         </div>
 
         <div class="contact-grid">
@@ -702,85 +702,26 @@
                 </div>
               </li>
             </ul>
-            <a class="contact-note" href="https://wa.me/4915233991890" target="_blank" rel="noopener noreferrer">
-              <svg class="contact-note__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.44-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.42.25-.7.25-1.29.18-1.42-.07-.13-.27-.2-.56-.35z"/><path d="M12.04 2.5c-5.23 0-9.48 4.25-9.48 9.48 0 1.67.44 3.3 1.27 4.74L2.5 21.5l4.9-1.28a9.44 9.44 0 0 0 4.63 1.18h.01c5.23 0 9.48-4.25 9.48-9.48 0-2.53-.99-4.91-2.78-6.7A9.42 9.42 0 0 0 12.04 2.5zm0 17.28h-.01a7.86 7.86 0 0 1-4-1.1l-.29-.17-2.9.76.78-2.83-.19-.29a7.85 7.85 0 0 1-1.2-4.17c0-4.34 3.54-7.88 7.9-7.88 2.1 0 4.08.82 5.57 2.31a7.83 7.83 0 0 1 2.3 5.57c0 4.35-3.54 7.87-7.87 7.87z"/></svg>
-              <span>Erreichbar auch über WhatsApp. Wir melden uns schnellstmöglich bei Ihnen zurück.</span>
-            </a>
           </div>
 
-          <div class="form-card reveal reveal--right">
-            <form id="contact-form" novalidate>
-              <div class="form-grid form-grid--2">
-                <div class="field">
-                  <label for="f-name">Name</label>
-                  <input id="f-name" name="name" type="text" autocomplete="name" required>
-                  <p class="field__error" id="f-name-error">Bitte geben Sie Ihren Namen an.</p>
-                </div>
-                <div class="field">
-                  <label for="f-email">E-Mail</label>
-                  <input id="f-email" name="email" type="email" autocomplete="email" required>
-                  <p class="field__error" id="f-email-error">Bitte geben Sie eine gültige E-Mail-Adresse an.</p>
-                </div>
-                <div class="field">
-                  <label for="f-phone">Telefon <span class="opt">(optional)</span></label>
-                  <input id="f-phone" name="phone" type="tel" autocomplete="tel">
-                </div>
-                <div class="field">
-                  <label for="f-service">Gewünschte Leistung</label>
-                  <select id="f-service" name="service">
-                    <option value="">Bitte wählen …</option>
-                    <option>Pflaster- &amp; Wegebau</option>
-                    <option>Außenanlagen &amp; Zaunbau</option>
-                    <option>Grünpflege</option>
-                    <option>Erd- &amp; Baggerarbeiten</option>
-                    <option>Abbruch &amp; Rückbau</option>
-                    <option>Entwässerung &amp; Sanierung</option>
-                    <option>Sonstiges</option>
-                  </select>
-                </div>
-                <div class="field field--full">
-                  <label for="f-message">Ihre Nachricht</label>
-                  <textarea id="f-message" name="message" required placeholder="Beschreiben Sie kurz Ihr Vorhaben – z. B. Fläche, Ort und Zeitraum."></textarea>
-                  <p class="field__error" id="f-message-error">Bitte beschreiben Sie Ihr Anliegen (mind. 10 Zeichen).</p>
-                </div>
+          <div class="wa-card reveal reveal--right">
+            <span class="wa-card__mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.44-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.42.25-.7.25-1.29.18-1.42-.07-.13-.27-.2-.56-.35z"/><path d="M12.04 2.5c-5.23 0-9.48 4.25-9.48 9.48 0 1.67.44 3.3 1.27 4.74L2.5 21.5l4.9-1.28a9.44 9.44 0 0 0 4.63 1.18h.01c5.23 0 9.48-4.25 9.48-9.48 0-2.53-.99-4.91-2.78-6.7A9.42 9.42 0 0 0 12.04 2.5zm0 17.28h-.01a7.86 7.86 0 0 1-4-1.1l-.29-.17-2.9.76.78-2.83-.19-.29a7.85 7.85 0 0 1-1.2-4.17c0-4.34 3.54-7.88 7.9-7.88 2.1 0 4.08.82 5.57 2.31a7.83 7.83 0 0 1 2.3 5.57c0 4.35-3.54 7.87-7.87 7.87z"/></svg></span>
+            <h3>Schreiben Sie uns direkt auf WhatsApp.</h3>
+            <p>Ein Klick, und Sie sind im Chat mit Florian Böttcher – ohne Formular, ohne Registrierung. Fotos vom Grundstück können Sie gleich mitschicken, das spart oft den ersten Termin.</p>
 
-                <!-- Honeypot: bleibt für Menschen unsichtbar und leer -->
-                <div class="hp-field" aria-hidden="true">
-                  <label for="f-website">Website</label>
-                  <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
-                </div>
+            <figure class="wa-preview">
+              <figcaption>Ihre Nachricht ist schon vorbereitet:</figcaption>
+              <blockquote>Hallo, ich bin über Ihre Website auf Sie aufmerksam geworden und hätte eine Anfrage.</blockquote>
+            </figure>
 
-                <!-- ============================================================
-                     ZUSTELLUNG DES FORMULARS  ·  EINZIGER OFFENER PUNKT
-                     Anbieter: Web3Forms (https://web3forms.com), kein Konto und
-                     kein Tracking nötig, keine Cookies. Der Access Key wird auf
-                     web3forms.com für die Empfangsadresse erzeugt und per Mail
-                     zugeschickt; er ist kein Geheimnis und darf im Quelltext
-                     stehen.
-                     Solange value="" leer ist, sendet das Formular NICHT an
-                     Web3Forms, sondern öffnet wie bisher das E-Mail-Programm
-                     (mailto-Fallback in js/main.js).
-                     Der Datenschutzhinweis dazu steht bereits in
-                     datenschutz/ (Abschnitt „Kontaktformular").
-                     ============================================================ -->
-                <input type="hidden" name="access_key" value="">
-                <input type="hidden" name="subject" value="Neue Projektanfrage über die Website">
-                <input type="hidden" name="from_name" value="Website Galabau Böttcher">
+            <a class="btn btn--wa" href="https://wa.me/4915233991890?text=Hallo%2C%20ich%20bin%20%C3%BCber%20Ihre%20Website%20auf%20Sie%20aufmerksam%20geworden%20und%20h%C3%A4tte%20eine%20Anfrage." target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.44-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.42.25-.7.25-1.29.18-1.42-.07-.13-.27-.2-.56-.35z"/><path d="M12.04 2.5c-5.23 0-9.48 4.25-9.48 9.48 0 1.67.44 3.3 1.27 4.74L2.5 21.5l4.9-1.28a9.44 9.44 0 0 0 4.63 1.18h.01c5.23 0 9.48-4.25 9.48-9.48 0-2.53-.99-4.91-2.78-6.7A9.42 9.42 0 0 0 12.04 2.5zm0 17.28h-.01a7.86 7.86 0 0 1-4-1.1l-.29-.17-2.9.76.78-2.83-.19-.29a7.85 7.85 0 0 1-1.2-4.17c0-4.34 3.54-7.88 7.9-7.88 2.1 0 4.08.82 5.57 2.31a7.83 7.83 0 0 1 2.3 5.57c0 4.35-3.54 7.87-7.87 7.87z"/></svg>
+              Chat auf WhatsApp starten
+            </a>
 
-                <div class="field field--consent field--full">
-                  <input id="f-consent" name="consent" type="checkbox" required>
-                  <label for="f-consent">Ich habe die <a href="datenschutz/">Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung der Anfrage einverstanden.</label>
-                  <p class="field__error" id="f-consent-error">Bitte stimmen Sie der Datenverarbeitung zu.</p>
-                </div>
+            <p class="wa-card__hint">Es öffnet sich WhatsApp bzw. WhatsApp&nbsp;Web. Daten werden erst übertragen, wenn Sie dort auf „Senden" tippen. Mehr dazu in der <a href="datenschutz/">Datenschutzerklärung</a>.</p>
 
-                <div class="field--full">
-                  <button class="btn btn--primary" type="submit" style="width:100%">Anfrage senden
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                  </button>
-                </div>
-                <p class="form-status field--full" role="status" aria-live="polite" tabindex="-1"></p>
-              </div>
-            </form>
+            <p class="wa-card__alt">Lieber anders? <a href="tel:+4915233991890">0152&nbsp;33991890</a> oder <a href="mailto:galabauboettcher@gmx.de">galabauboettcher@gmx.de</a></p>
           </div>
         </div>
 
@@ -857,13 +798,21 @@
       </div>
     </div>
   </footer>
+  <!-- Schwebender WhatsApp-Button: nur ab 56em, darunter uebernimmt die
+       Schnellkontakt-Leiste - kein doppelter Button auf kleinen Displays -->
+  <a class="wa-float" href="https://wa.me/4915233991890?text=Hallo%2C%20ich%20bin%20%C3%BCber%20Ihre%20Website%20auf%20Sie%20aufmerksam%20geworden%20und%20h%C3%A4tte%20eine%20Anfrage." target="_blank" rel="noopener noreferrer"
+     aria-label="Chat auf WhatsApp starten – öffnet WhatsApp in neuem Tab">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.44-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.42.25-.7.25-1.29.18-1.42-.07-.13-.27-.2-.56-.35z"/><path d="M12.04 2.5c-5.23 0-9.48 4.25-9.48 9.48 0 1.67.44 3.3 1.27 4.74L2.5 21.5l4.9-1.28a9.44 9.44 0 0 0 4.63 1.18h.01c5.23 0 9.48-4.25 9.48-9.48 0-2.53-.99-4.91-2.78-6.7A9.42 9.42 0 0 0 12.04 2.5zm0 17.28h-.01a7.86 7.86 0 0 1-4-1.1l-.29-.17-2.9.76.78-2.83-.19-.29a7.85 7.85 0 0 1-1.2-4.17c0-4.34 3.54-7.88 7.9-7.88 2.1 0 4.08.82 5.57 2.31a7.83 7.83 0 0 1 2.3 5.57c0 4.35-3.54 7.87-7.87 7.87z"/></svg>
+    <span class="wa-float__label">WhatsApp</span>
+  </a>
+
   <!-- Mobiler Schnellkontakt: nur zwei reale Kontaktwege, ab 56em ausgeblendet -->
   <nav class="quick-contact" aria-label="Schnellkontakt">
     <a class="quick-contact__btn" href="tel:+4915233991890">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16.5 16.5 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
       Anrufen
     </a>
-    <a class="quick-contact__btn quick-contact__btn--wa" href="https://wa.me/4915233991890" target="_blank" rel="noopener noreferrer">
+    <a class="quick-contact__btn quick-contact__btn--wa" href="https://wa.me/4915233991890?text=Hallo%2C%20ich%20bin%20%C3%BCber%20Ihre%20Website%20auf%20Sie%20aufmerksam%20geworden%20und%20h%C3%A4tte%20eine%20Anfrage." target="_blank" rel="noopener noreferrer">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.44-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.42.25-.7.25-1.29.18-1.42-.07-.13-.27-.2-.56-.35z"/><path d="M12.04 2.5c-5.23 0-9.48 4.25-9.48 9.48 0 1.67.44 3.3 1.27 4.74L2.5 21.5l4.9-1.28a9.44 9.44 0 0 0 4.63 1.18h.01c5.23 0 9.48-4.25 9.48-9.48 0-2.53-.99-4.91-2.78-6.7A9.42 9.42 0 0 0 12.04 2.5zm0 17.28h-.01a7.86 7.86 0 0 1-4-1.1l-.29-.17-2.9.76.78-2.83-.19-.29a7.85 7.85 0 0 1-1.2-4.17c0-4.34 3.54-7.88 7.9-7.88 2.1 0 4.08.82 5.57 2.31a7.83 7.83 0 0 1 2.3 5.57c0 4.35-3.54 7.87-7.87 7.87z"/></svg>
       WhatsApp
     </a>

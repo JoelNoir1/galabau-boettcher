@@ -1095,85 +1095,127 @@ a.contact-note:hover {
   color: var(--c-lime-bright);
 }
 
-/* Formular */
-.form-card {
+/* ---------- WhatsApp-Kontakt ----------
+   Ersetzt das frueher hier stehende Kontaktformular. Bewusst in der Karten-
+   optik der Seite statt im WhatsApp-Gruen: die Marke bleibt Boettcher, das
+   WhatsApp-Zeichen ist nur das Erkennungsmerkmal. */
+.wa-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
   padding: clamp(1.8rem, 4vw, 2.6rem);
   background: var(--bg-card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow-md);
 }
-.form-grid { display: grid; gap: 1.15rem; }
-.field { display: grid; gap: .4rem; }
-.field label { font: 600 .9rem/1.3 var(--font-body); }
-.field label .opt { font-weight: 400; color: var(--text-soft); }
-.field input,
-.field select,
-.field textarea {
-  width: 100%;
-  padding: .8em 1em;
-  border: 1.5px solid var(--line);
-  border-radius: var(--radius-sm);
-  background: var(--bg-soft);
-  color: var(--text);
-  font: 400 .98rem/1.5 var(--font-body);
-  transition: border-color var(--t-fast), background var(--t-fast), box-shadow var(--t-fast);
+.wa-card__mark {
+  display: grid;
+  place-items: center;
+  width: 3.4rem; height: 3.4rem;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--c-lime) 18%, var(--bg-card));
+  color: var(--c-lime-deep);
 }
-.field textarea { resize: vertical; min-height: 8.5rem; }
-.field input:focus,
-.field select:focus,
-.field textarea:focus {
-  outline: none;
-  border-color: var(--c-forest);
-  background: var(--bg-card);
-  box-shadow: 0 0 0 4px var(--ring);
-}
-.field.invalid input,
-.field.invalid select,
-.field.invalid textarea { border-color: var(--c-error); }
-.field__error {
-  display: none;
-  font-size: .84rem;
-  color: var(--c-error);
-  font-weight: 500;
-}
-.field.invalid .field__error { display: block; }
-.field--consent {
-  grid-template-columns: auto 1fr;
-  align-items: start;
-  gap: .7rem;
-}
-.field--consent input {
-  width: 1.15rem; height: 1.15rem;
-  margin-top: .25rem;
-  accent-color: var(--c-forest);
-}
-.field--consent label { font-weight: 400; font-size: .88rem; color: var(--text-soft); }
-.field--consent .field__error { grid-column: 1 / -1; }
-.hp-field {
-  position: absolute !important;
-  left: -9999px !important;
-  width: 1px; height: 1px;
-  overflow: hidden;
-}
-.form-status {
-  display: none;
+:root[data-theme="dark"] .wa-card__mark { color: var(--c-lime-bright); }
+.wa-card__mark svg { width: 1.9rem; height: 1.9rem; }
+.wa-card h3 { margin: 0; font-size: clamp(1.3rem, 1.1rem + .9vw, 1.7rem); }
+.wa-card > p { margin: 0; color: var(--text-soft); font-size: .98rem; }
+
+/* Vorschau der vorbelegten Nachricht: macht transparent, was gesendet wird */
+.wa-preview {
+  margin: 0;
   padding: 1rem 1.2rem;
   border-radius: var(--radius-sm);
-  font-size: .95rem;
-  font-weight: 500;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--c-lime);
 }
-.form-status.success {
-  display: block;
-  background: color-mix(in srgb, var(--c-success) 12%, var(--bg-card));
-  border: 1px solid color-mix(in srgb, var(--c-success) 45%, var(--line));
-  color: var(--c-success);
+.wa-preview figcaption {
+  font: 600 .78rem/1.4 var(--font-body);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: .45rem;
 }
-.form-status.error {
-  display: block;
-  background: color-mix(in srgb, var(--c-error) 10%, var(--bg-card));
-  border: 1px solid color-mix(in srgb, var(--c-error) 40%, var(--line));
-  color: var(--c-error);
+.wa-preview blockquote {
+  margin: 0;
+  font-size: .98rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.btn--wa {
+  width: 100%;
+  padding: 1.05em 1.9em;
+  font-size: 1.02rem;
+  background: var(--c-lime);
+  color: var(--c-forest-950);
+}
+.btn--wa svg { width: 1.35em; height: 1.35em; }
+/* Das WhatsApp-Zeichen soll beim Hover nicht wie ein Pfeil wegwandern */
+.btn--wa:hover svg { transform: none; }
+.btn--wa:hover {
+  background: var(--c-lime-bright);
+  color: var(--c-forest-950);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.wa-card__hint {
+  margin: 0;
+  font-size: .84rem;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+.wa-card__alt {
+  margin: 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: .92rem;
+  color: var(--text-soft);
+}
+.wa-card__alt a { font-weight: 600; }
+
+/* Schwebender Button, nur Desktop (mobil gibt es die Schnellkontakt-Leiste).
+   Rundes Feld, das beim Hover das Label freigibt - kein Dauer-Banner. */
+.wa-float {
+  position: fixed;
+  right: clamp(1.25rem, 3vw, 2rem);
+  bottom: clamp(1.25rem, 3vw, 2rem);
+  z-index: 55;
+  display: none;
+  align-items: center;
+  gap: .65rem;
+  height: 3.5rem;
+  padding: 0 1.05rem;
+  border-radius: 999px;
+  background: var(--c-forest);
+  color: var(--c-cream);
+  box-shadow: 0 6px 16px rgba(13, 29, 22, .18), 0 18px 40px rgba(13, 29, 22, .22);
+  transition: background var(--t-fast), color var(--t-fast),
+              transform var(--t-fast), box-shadow var(--t-fast);
+}
+.wa-float svg { width: 1.55rem; height: 1.55rem; flex: none; color: var(--c-lime-bright); }
+.wa-float__label {
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font: 700 .95rem/1 var(--font-display);
+  opacity: 0;
+  transition: max-width var(--t-med), opacity var(--t-fast);
+}
+.wa-float:hover,
+.wa-float:focus-visible {
+  background: var(--c-forest-600);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(13, 29, 22, .22), 0 22px 48px rgba(13, 29, 22, .26);
+}
+.wa-float:hover .wa-float__label,
+.wa-float:focus-visible .wa-float__label { max-width: 7rem; opacity: 1; }
+@media (min-width: 56em) {
+  .wa-float { display: inline-flex; }
 }
 
 /* Karte (Zwei-Klick) */
@@ -1651,8 +1693,6 @@ html.js .reveal--curtain.curtain-armed:not(.in) {
   .insta-grid { grid-template-columns: repeat(3, 1fr); }
   .trust__grid { grid-template-columns: repeat(2, 1fr); }
   .contact-grid { grid-template-columns: 5fr 6fr; }
-  .form-grid--2 { grid-template-columns: 1fr 1fr; }
-  .form-grid--2 .field--full { grid-column: 1 / -1; }
   .check-list { grid-template-columns: 1fr 1fr; }
   .footer-grid { grid-template-columns: 1.6fr 1fr 1fr; }
 }

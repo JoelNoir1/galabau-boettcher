@@ -27,18 +27,16 @@ Form, die Suchmaschinen erwarten.
 
 ## Offene Punkte / Checkliste
 
-1. **Kontaktformular scharf schalten – einziger offener Punkt.** In
-   `index.html` steht im Formular `<input type="hidden" name="access_key"
-   value="">`. Solange dieser Wert leer ist, wird **nichts** an einen externen
-   Dienst gesendet; das Formular öffnet stattdessen das E-Mail-Programm
-   (mailto-Fallback). Sobald der kostenlose Access Key von
-   [web3forms.com](https://web3forms.com) für die Empfangsadresse
-   (`galabauboettcher@gmx.de`) dort eingetragen ist, geht die Anfrage per POST
-   an Web3Forms und von dort als E-Mail an diese Adresse.
-   Der Datenschutzhinweis dazu steht bereits in `datenschutz/` (Abschnitt 4).
-   - *Alternative bei klassischem Hosting mit PHP:* in `js/main.js`
-     `CONFIG.formEndpoint` auf das eigene Skript setzen und
-     `CONFIG.requiresAccessKey` auf `false`.
+1. **Kontakt läuft über WhatsApp, nicht über ein Formular.** Ein Kontakt-
+   formular gibt es nicht mehr und damit auch keinen Formulardienst, keinen
+   Server und keinen Access Key. Die Schaltflächen sind einfache Links auf
+   `https://wa.me/4915233991890?text=…` mit vorbelegter Nachricht:
+   - Kontaktbereich der Startseite (`.wa-card`)
+   - schwebender Button unten rechts, erst ab 56em (`.wa-float`)
+   - Schnellkontakt-Leiste auf kleinen Displays (`.quick-contact`)
+   Ändert sich die Rufnummer oder der Nachrichtentext, müssen alle
+   `wa.me`-Links angepasst werden (je 2–3 Stellen pro Seite).
+   Der Datenschutzhinweis dazu steht in `datenschutz/` (Abschnitt 4).
 2. **Google-Bewertungen:** Unter `#bewertungen` in `index.html` steht die
    echte Rezension von Christian Lang (5,0 aus 1 Google-Rezension). Weitere
    echte Rezensionen können als zusätzliche `.tst`-Karten ergänzt werden;
