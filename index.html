@@ -27,11 +27,10 @@
 
   <link rel="preload" href="assets/fonts/manrope-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
-  <!-- Hero-Bild ist das LCP-Element; AVIF-Preload wird von Browsern ohne
-       AVIF-Unterstützung dank type-Attribut ignoriert (kein Doppel-Download). -->
-  <link rel="preload" as="image" type="image/avif"
-        imagesrcset="assets/img/hero-pflaster-480.avif 480w, assets/img/hero-pflaster-720.avif 720w, assets/img/hero-pflaster-1000.avif 1000w"
-        imagesizes="(min-width: 56em) 34rem, (min-width: 40em) 60vw, 92vw" fetchpriority="high">
+  <!-- Kein Preload für das Hero-Bild: Messung zeigt den H1 als LCP-Element,
+       und der Preload wählte bei schmalen Viewports eine andere srcset-Variante
+       als das <picture> selbst - das hätte eine Datei doppelt geladen.
+       Die frühe Priorisierung übernimmt fetchpriority="high" am <img>. -->
   <link rel="stylesheet" href="css/main.css">
   <script src="js/main.js" defer></script>
 
@@ -550,7 +549,7 @@
         </div>
         <figure class="about__panel reveal reveal--zoom">
           <img src="assets/img/logo-mark.webp" alt="Logo von Garten- und Landschaftsbau Böttcher: Bagger, Grünpflanzen und Kettensäge in drei Kreisen" width="640" height="320" loading="lazy" decoding="async">
-          <figcaption><strong>Garten- &amp; Landschaftsbau Böttcher</strong>Wippertalstraße 20 · 99707 Kyffhäuserland</figcaption>
+          <figcaption><strong>Garten- &amp; Landschaftsbau Böttcher</strong>Wippertalstraße 20 · 99707 Kyffhäuserkreis</figcaption>
         </figure>
       </div>
     </section>
