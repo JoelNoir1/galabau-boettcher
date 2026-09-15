@@ -44,9 +44,10 @@ SQUARE = 600
 # Nur diese Motive brauchen quadratische Kacheln (Instagram-Grid)
 SQUARE_SLUGS = {"dachpflege", "zaunbau", "zaun-anfrage", "abriss-rueckbau"}
 # Fotos ohne EXIF-Flag, die physisch gedreht vorliegen (Wert = Pillow-Transpose)
-ROTATE = {
-    "gruenpflege-neu.jpg": Image.Transpose.ROTATE_270,  # 90 Grad im Uhrzeigersinn
-}
+# Hinweis: gruenpflege-neu.jpg stand hier faelschlich mit ROTATE_270 und wurde
+# dadurch um 90 Grad gekippt ausgeliefert. Das Original liegt bereits korrekt
+# im Hochformat vor und braucht keine manuelle Drehung.
+ROTATE: dict[str, Image.Transpose] = {}
 
 report = []
 
@@ -81,6 +82,54 @@ def responsive(name: str, slug: str) -> None:
         save_all(sq, f"{slug}-sq-{SQUARE}")
 
 
+def hero() -> None:
+    """Hero-Bild der Startseite: 4:5-Ausschnitt aus dem Pflaster-Projekt.
+
+    Eigener Ausschnitt statt der normalen responsive-Variante, weil das Bild
+    im Hero das LCP-Element ist: engerer Zuschnitt, etwas staerkere Kompression,
+    dadurch spuerbar kleiner als pflaster-wegebau-800.
+    """
+    im = load("pflaster-wegebau-neu.png")
+    # Oberer Ausschnitt: Himmel, Baeume und die Perspektive des Weges bleiben
+    # erhalten. Ein tieferer Zuschnitt zeigt nur noch abstrakte Steintextur.
+    target_h = round(im.width * 5 / 4)
+    top = round((im.height - target_h) * 0.10)
+    im = im.crop((0, top, im.width, top + target_h))
+    for w in (480, 720, 1000):
+        h = round(w * 5 / 4)
+        s = im.resize((w, h), Image.LANCZOS)
+        s.save(OUT / f"hero-pflaster-{w}.avif", "AVIF", quality=46)
+        s.save(OUT / f"hero-pflaster-{w}.webp", "WEBP", quality=68, method=6)
+        s.save(OUT / f"hero-pflaster-{w}.jpg", "JPEG", quality=76, optimize=True, progressive=True)
+        kb = (OUT / f"hero-pflaster-{w}.avif").stat().st_size // 1024
+        report.append(f"  hero-pflaster-{w}.(avif|webp|jpg)  {w}x{h}  (avif {kb} KB)")
+
+
+# Instagram-Posts mit eingebranntem Werbetext: Schriftzug oben, Claim bzw.
+# Logo-Wasserzeichen unten. Dazwischen liegt jeweils ein textfreies Band mit
+# dem eigentlichen Motiv - genau das wird fuer die Website ausgeschnitten.
+# (left, top, right, bottom) als Anteil der Bildkanten.
+# Ersetzen, sobald die Originalfotos ohne Overlay vorliegen.
+INSTA_CROPS = {
+    # Datei, Ziel-Slug, Ausschnitt, Ausgabebreiten
+    ("termin sichern.jpg", "zaunbau-clean"): ((0.08, 0.32, 0.70, 0.68), (480, 800)),
+    ("ZAUNBAU1.jpg", "zaunbau-dsm"): ((0.00, 0.495, 0.55, 0.855), (480, 800, 1200)),
+    ("1.jpg", "dachpflege-clean"): ((0.02, 0.30, 0.80, 0.82), (480, 800, 1200)),
+}
+
+
+def insta_crops() -> None:
+    for (name, slug), (box, breiten) in INSTA_CROPS.items():
+        im = load(name)
+        l, o, r, u = box
+        im = im.crop((round(im.width * l), round(im.height * o),
+                      round(im.width * r), round(im.height * u)))
+        report.append(f"{name}  ->  {slug}  (textfreier Ausschnitt {im.width}x{im.height})")
+        for w in breiten:
+            h = round(im.height * w / im.width)
+            save_all(im.resize((w, h), Image.LANCZOS), f"{slug}-{w}")
+
+
 def logo() -> tuple[Image.Image, tuple[int, int, int]]:
     im = load("logo.png.jpeg")
     if im.height > im.width:  # Sicherheitsnetz, falls EXIF fehlt
@@ -98,6 +147,12 @@ def logo() -> tuple[Image.Image, tuple[int, int, int]]:
     mark.save(OUT / "logo-mark.png", "PNG", optimize=True)
     mark.save(OUT / "logo-mark.webp", "WEBP", quality=88, method=6)
     report.append(f"  logo-mark.png/webp  {mark.width}x{mark.height}")
+
+    # Header-Variante: wird mit 82x41 CSS-Pixeln dargestellt, 200px Breite deckt
+    # auch 2x-Displays ab. Spart im kritischen Ladepfad gegenueber logo-mark.webp.
+    small = mark.resize((200, round(mark.height * 200 / mark.width)), Image.LANCZOS)
+    small.save(OUT / "logo-mark-200.webp", "WEBP", quality=88, method=6)
+    report.append(f"  logo-mark-200.webp  {small.width}x{small.height}")
 
     # Komplettes Banner als Referenz
     full = im.resize((1200, round(im.height * 1200 / im.width)), Image.LANCZOS)
@@ -159,6 +214,8 @@ def main() -> None:
     mark, bg = logo()
     for name, slug in PHOTOS.items():
         responsive(name, slug)
+    hero()
+    insta_crops()
     favicons()
     og_image(mark, bg)
     print("\n".join(report))

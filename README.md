@@ -18,30 +18,40 @@ content/originale/          Original-Fotos (Quelle für die Bild-Pipeline)
 tools/optimize-images.py    Bild-Pipeline (Python + Pillow)
 ```
 
-## Vor dem Livegang – Checkliste
+## Live-Domain
 
-1. **Domain eintragen:** Überall nach `[PLATZHALTER-DOMAIN]` suchen
-   (index.html, leistungen/, projekte/, impressum/, datenschutz/, sitemap.xml,
-   robots.txt) und `www.galabau-boettcher.de` durch die echte Domain ersetzen.
-2. **Kontaktformular anbinden:** In `js/main.js` oben `CONFIG.formEndpoint`
-   setzen. Ohne Endpoint öffnet das Formular das E-Mail-Programm (mailto).
-   - *Variante PHP (klassisches Hosting):* kleines Mail-Skript hochladen und
-     `formEndpoint: "/kontakt.php"` eintragen.
-   - *Variante Web3Forms:* kostenlosen Access-Key auf web3forms.com holen,
-     `formEndpoint: "https://api.web3forms.com/submit"` eintragen und im
-     Formular ein `<input type="hidden" name="access_key" value="…">` ergänzen.
-   - Danach die Datenschutzerklärung (Abschnitt 4) entsprechend ergänzen.
-3. **Google-Bewertungen:** Unter `#bewertungen` in `index.html` steht die
+Die Seite läuft unter **https://galabau-böttcher.com/**. In canonical, og:url,
+JSON-LD, robots.txt und sitemap.xml steht die Punycode-Schreibweise
+`https://xn--galabau-bttcher-htb.com/` – das ist dieselbe Adresse und die
+Form, die Suchmaschinen erwarten.
+
+## Offene Punkte / Checkliste
+
+1. **Kontakt läuft über WhatsApp, nicht über ein Formular.** Ein Kontakt-
+   formular gibt es nicht mehr und damit auch keinen Formulardienst, keinen
+   Server und keinen Access Key. Die Schaltflächen sind einfache Links auf
+   `https://wa.me/4915233991890?text=…` mit vorbelegter Nachricht:
+   - Kontaktbereich der Startseite (`.wa-card`)
+   - schwebender Button unten rechts, erst ab 56em (`.wa-float`)
+   - Schnellkontakt-Leiste auf kleinen Displays (`.quick-contact`)
+   Ändert sich die Rufnummer oder der Nachrichtentext, müssen alle
+   `wa.me`-Links angepasst werden (je 2–3 Stellen pro Seite).
+   Der Datenschutzhinweis dazu steht in `datenschutz/` (Abschnitt 4).
+2. **Google-Bewertungen:** Unter `#bewertungen` in `index.html` steht die
    echte Rezension von Christian Lang (5,0 aus 1 Google-Rezension). Weitere
    echte Rezensionen können als zusätzliche `.tst`-Karten ergänzt werden;
    dann `.tst-single` zu `.tst-track` ändern und Anzahl/`aggregateRating`
    (JSON-LD im `<head>`) anpassen. Den Button-Link auf das Google-Profil
    bei Vorliegen der kurzen Profil-URL (`https://g.page/r/…`) ersetzen.
-4. **Platzhalter-Zahlen prüfen:** Sektion „Zahlen" in `index.html`
-   (100+ Projekte / 10+ Jahre / 100 % Leidenschaft) mit echten Werten belegen.
-5. **Impressum/Datenschutz:** `[PLATZHALTER]`-Stellen ausfüllen (USt-ID,
+3. **Fotos ohne Instagram-Overlay:** Drei Originale (`ZAUNBAU1.jpg`,
+   `termin sichern.jpg`, `1.jpg`) sind Instagram-Posts mit eingebranntem
+   Werbetext. Für die Website schneidet `tools/optimize-images.py`
+   (Dict `INSTA_CROPS`) den textfreien Bildbereich aus. Liegen die
+   Originalfotos ohne Overlay vor: in `content/originale/` ersetzen und
+   die Ausschnitte in `INSTA_CROPS` entfernen.
+4. **Impressum/Datenschutz:** `[PLATZHALTER]`-Stellen ausfüllen (USt-ID,
    Hoster, ggf. Handwerkskammer) und rechtlich prüfen lassen.
-6. **Projekt-Orte prüfen:** In `projekte/index.html` sind die Orte gesetzt
+5. **Projekt-Orte prüfen:** In `projekte/index.html` sind die Orte gesetzt
    (Zaunbau & Abriss: „Region Kyffhäuserkreis", Dachpflege: „Region Erfurt").
    Bei Bedarf durch die konkreten Orte ersetzen. Das Einzugsgebiet
    (Kyffhäuserkreis, Sömmerda, Erfurt, Sangerhausen, Nordthüringen) ist in
@@ -60,9 +70,10 @@ python tools/optimize-images.py
 Das Skript erzeugt automatisch AVIF/WebP/JPG in 480/800/1200 px sowie
 quadratische 600-px-Kacheln für das Instagram-Grid (inkl. EXIF-Korrektur).
 
-- **Hero-Foto:** Sobald ein sauberes Querformat-Foto existiert, in
-  `index.html` den Block `.hero__bg` durch den vorbereiteten
-  `.hero__photo`-Block ersetzen (Kommentar im HTML zeigt die Stelle).
+- **Hero-Foto:** Die Startseite zeigt einen 4:5-Ausschnitt des
+  Pflaster-Projekts (`hero-pflaster-*`, erzeugt von der Funktion `hero()` in
+  der Pipeline, bewusst stärker komprimiert, weil es das LCP-Element ist).
+  Für ein anderes Motiv dort die Quelldatei und den Ausschnitt ändern.
 - **Vorher/Nachher:** Echtes Bildpaar (`vorher-*` / `nachher-*`, Erdarbeiten →
   Bodenplatte) ist eingebunden. Für weitere Paare die Quelldateien nach
   `content/originale/` legen, in `tools/optimize-images.py` eintragen und
@@ -70,10 +81,15 @@ quadratische 600-px-Kacheln für das Instagram-Grid (inkl. EXIF-Korrektur).
 
 ## Logo austauschen
 
-Alle Seiten referenzieren `assets/img/logo-mark.png` (+ `.webp`).
-Eine höher aufgelöste PNG/SVG einfach unter **gleichem Dateinamen**
-überschreiben – kein Code-Edit nötig. (Quelle des aktuellen Zuschnitts:
-`content/originale/logo.png.jpeg`, verarbeitet durch die Bild-Pipeline.)
+Die Bild-Pipeline erzeugt aus `content/originale/logo.png.jpeg` drei Dateien:
+
+- `logo-mark-200.webp` (4 KB) – Header, im kritischen Ladepfad
+- `logo-mark.webp` (20 KB) – Footer, Über-uns-Karte, Kontaktkarte
+- `logo-mark.png` (185 KB) – nur noch als `logo`-Angabe im JSON-LD; wird
+  nicht mehr an Browser ausgeliefert
+
+Für ein neues Logo die Quelldatei unter gleichem Namen ersetzen und
+`python tools/optimize-images.py` ausführen.
 
 ## Instagram-Grid aktualisieren
 

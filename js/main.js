@@ -6,25 +6,6 @@
 (function () {
   "use strict";
 
-  /* ------------------------------------------------------------------
-     Konfiguration
-     formEndpoint: URL des Formular-Empfängers (PHP-Skript, Web3Forms …).
-     Solange leer, öffnet das Formular als Fallback das E-Mail-Programm
-     mit vorbefüllter Nachricht (mailto).
-
-     Anbindung später — zwei Beispiele:
-     1) Eigenes PHP auf klassischem Webhosting:
-        formEndpoint: "/kontakt.php"   (POST, Felder: name, email, phone,
-        service, message)
-     2) Web3Forms (https://web3forms.com, kostenloser Access-Key):
-        formEndpoint: "https://api.web3forms.com/submit"
-        und unten im HTML das hidden-Feld access_key einkommentieren.
-  ------------------------------------------------------------------ */
-  const CONFIG = {
-    formEndpoint: "",
-    email: "galabauboettcher@gmx.de",
-  };
-
   const motionOK = window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
   const $ = (sel, ctx) => (ctx || document).querySelector(sel);
   const $$ = (sel, ctx) => Array.from((ctx || document).querySelectorAll(sel));
@@ -155,22 +136,6 @@
       { threshold: 0.25 }
     );
     io.observe(timeline);
-  }
-
-  /* ---------- Dezenter Parallax im Hero ---------- */
-  const heroBg = $(".hero__bg");
-  if (heroBg && motionOK && window.matchMedia("(min-width: 56em)").matches) {
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const y = Math.min(window.scrollY, window.innerHeight);
-      heroBg.style.transform = `translateY(${y * 0.16}px)`;
-    };
-    window.addEventListener(
-      "scroll",
-      () => { if (!raf) raf = requestAnimationFrame(update); },
-      { passive: true }
-    );
   }
 
   /* ---------- Bewertungs-Slider: Punkte (mobil) ---------- */
@@ -330,104 +295,6 @@
       iframe.setAttribute("allowfullscreen", "");
       iframe.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
       consent.replaceWith(iframe);
-    });
-  }
-
-  /* ---------- Kontaktformular ---------- */
-  const form = $("#contact-form");
-  if (form) {
-    const status = $(".form-status", form);
-    const loadedAt = Date.now();
-
-    const setInvalid = (field, invalid) => {
-      const wrap = field.closest(".field");
-      if (wrap) wrap.classList.toggle("invalid", invalid);
-      field.setAttribute("aria-invalid", String(invalid));
-      return !invalid;
-    };
-
-    const validate = () => {
-      let ok = true;
-      const name = form.elements.name;
-      const email = form.elements.email;
-      const message = form.elements.message;
-      const consent = form.elements.consent;
-      ok = setInvalid(name, name.value.trim().length < 2) && ok;
-      ok = setInvalid(email, !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) && ok;
-      ok = setInvalid(message, message.value.trim().length < 10) && ok;
-      ok = setInvalid(consent, !consent.checked) && ok;
-      return ok;
-    };
-
-    ["name", "email", "message"].forEach((n) => {
-      form.elements[n].addEventListener("input", (e) => setInvalid(e.target, false));
-    });
-    form.elements.consent.addEventListener("change", (e) => setInvalid(e.target, false));
-
-    const showStatus = (type, text) => {
-      status.className = "form-status " + type;
-      status.textContent = text;
-      status.focus({ preventScroll: false });
-    };
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      /* Spam-Schutz: Honeypot + Mindest-Ausfüllzeit */
-      if (form.elements.website.value !== "" || Date.now() - loadedAt < 3000) {
-        showStatus("success", "Vielen Dank! Ihre Nachricht wurde übermittelt.");
-        form.reset();
-        return;
-      }
-      if (!validate()) {
-        showStatus("error", "Bitte prüfen Sie die markierten Felder.");
-        return;
-      }
-
-      const data = {
-        name: form.elements.name.value.trim(),
-        email: form.elements.email.value.trim(),
-        phone: form.elements.phone.value.trim(),
-        service: form.elements.service.value,
-        message: form.elements.message.value.trim(),
-      };
-
-      if (CONFIG.formEndpoint) {
-        const btn = $("button[type=submit]", form);
-        btn.disabled = true;
-        try {
-          const body = new FormData(form);
-          const res = await fetch(CONFIG.formEndpoint, {
-            method: "POST",
-            body,
-            headers: { Accept: "application/json" },
-          });
-          if (!res.ok) throw new Error("HTTP " + res.status);
-          showStatus("success", "Vielen Dank für Ihre Anfrage! Wir melden uns schnellstmöglich – in der Regel innerhalb von 24 Stunden.");
-          form.reset();
-        } catch (err) {
-          showStatus("error", "Senden fehlgeschlagen. Bitte rufen Sie uns an (0152 33991890) oder schreiben Sie direkt an " + CONFIG.email + ".");
-        } finally {
-          btn.disabled = false;
-        }
-      } else {
-        /* Fallback ohne Endpoint: E-Mail-Programm mit vorbefüllter Nachricht */
-        const subject = "Projektanfrage über die Website – " + (data.service || "Allgemein");
-        const bodyText =
-          "Name: " + data.name +
-          "\nE-Mail: " + data.email +
-          (data.phone ? "\nTelefon: " + data.phone : "") +
-          (data.service ? "\nLeistung: " + data.service : "") +
-          "\n\n" + data.message;
-        window.location.href =
-          "mailto:" + CONFIG.email +
-          "?subject=" + encodeURIComponent(subject) +
-          "&body=" + encodeURIComponent(bodyText);
-        showStatus(
-          "success",
-          "Ihr E-Mail-Programm öffnet sich mit der fertigen Nachricht. Alternativ erreichen Sie uns unter " + CONFIG.email + "."
-        );
-      }
     });
   }
 
