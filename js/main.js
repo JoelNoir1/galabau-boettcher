@@ -190,9 +190,14 @@
       set(((e.clientX - rect.left) / rect.width) * 100);
     };
 
+    // Ohne das startet der Browser beim Ziehen mit der Maus sein eigenes
+    // Bild-Drag&Drop und bricht die Zeigereingabe mit pointercancel ab.
+    ba.addEventListener("dragstart", (e) => e.preventDefault());
+
     ba.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "mouse") e.preventDefault(); // keine Textauswahl, kein natives Ziehen
       ba.classList.add("ba--interacted"); // stoppt den Auto-Sweep, sobald der Nutzer selbst zieht
-      ba.setPointerCapture(e.pointerId);
+      try { ba.setPointerCapture(e.pointerId); } catch (err) { /* Capture ist optional */ }
       fromEvent(e);
       const move = (ev) => fromEvent(ev);
       const up = () => {

@@ -1508,13 +1508,18 @@ html:not(.js) .ba-switch .ba-tabs { display: none; }
   overflow: hidden;
   box-shadow: var(--shadow-md);
   touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
   --pos: 50%;
 }
 /* Auto-Sweep: einmaliger, dezenter Schwenk beim ersten Scroll-in-View, um die
    Interaktivität des Reglers zu zeigen, bevor der Nutzer selbst zieht. */
+/* inherits: true ist zwingend: Vorher-Ebene (.ba__after) und Griff lesen
+   --pos als Kind-Elemente. Mit inherits: false sehen sie immer nur den
+   Startwert 50 % und der Regler bewegt sich optisch nicht. */
 @property --pos {
   syntax: "<percentage>";
-  inherits: false;
+  inherits: true;
   initial-value: 50%;
 }
 @keyframes ba-sweep {
