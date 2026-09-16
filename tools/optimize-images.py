@@ -38,6 +38,10 @@ PHOTOS = {
     "gruenpflege-neu.jpg": "gruenpflege",
     "vorher-nachher-vorher.jpg": "vorher",
     "vorher-nachher-nachher.jpg": "nachher",
+    # Zweiter Vorher/Nachher-Vergleich (Import aus Desktop "für claude": 1.jpeg / 3.jpeg).
+    # Beide Originale sind 3:4 - gleiche Ausgabegroessen, dadurch deckungsgleiche Ausschnitte.
+    "vorher-nachher-2-vorher.jpg": "vorher-2",
+    "vorher-nachher-2-nachher.jpg": "nachher-2",
 }
 WIDTHS = [480, 800, 1200]
 SQUARE = 600

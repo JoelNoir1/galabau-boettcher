@@ -1449,6 +1449,59 @@ a.contact-note:hover {
 .ba-block__head h3 { margin: .3em 0 .4em; font-size: var(--fs-h3); }
 .ba-block__head p { color: var(--text-soft); font-size: .97rem; max-width: 34rem; }
 
+/* Hochformat-Vergleich: gleiches Seitenverhaeltnis wie die Originale (3:4),
+   dadurch identischer Ausschnitt fuer Vorher und Nachher. Schmal gehalten,
+   damit er auf dem Desktop nicht die ganze Hoehe fuellt. */
+/* width: 100% noetig, sonst schrumpft der Slider im Grid-Panel auf Inhaltsbreite */
+.ba.ba--portrait { width: 100%; max-width: 26rem; justify-self: center; margin-inline: auto; }
+.ba.ba--portrait img { aspect-ratio: 3 / 4; }
+
+/* Umschalter zwischen mehreren Vergleichen: schlichte Pillen im Stil der
+   Sprungmarken, kein Galerie-Plugin. Ohne JavaScript ausgeblendet, dann
+   stehen alle Vergleiche untereinander. */
+.ba-block__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem 1.5rem;
+}
+.ba-block__top .eyebrow { margin-bottom: 0; }
+.ba-tabs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  padding: .3rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-card);
+}
+html:not(.js) .ba-tabs { display: none; }
+.ba-tabs__tab {
+  min-height: 2.75rem;
+  padding: .5em 1.15em;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-soft);
+  font: 600 .9rem/1.2 var(--font-body);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.ba-tabs__tab:hover { color: var(--brand); }
+.ba-tabs__tab[aria-selected="true"] { background: var(--brand); color: #fff; }
+.ba-panel { display: grid; gap: 1.6rem; align-items: center; }
+/* display:grid wuerde das hidden-Attribut sonst aushebeln */
+.ba-panel[hidden] { display: none; }
+.ba-panel + .ba-panel { margin-top: 2.5rem; }
+html.js .ba-panel + .ba-panel { margin-top: 0; }
+.ba-panel__caption {
+  margin: 0 0 1.1rem;
+  text-align: center;
+  color: var(--text-soft);
+}
+.ba-switch .ba-tabs { display: flex; width: fit-content; margin: 0 auto 1.4rem; }
+html:not(.js) .ba-switch .ba-tabs { display: none; }
+
 .ba {
   position: relative;
   border-radius: var(--radius);
@@ -1469,7 +1522,7 @@ a.contact-note:hover {
   48%, 58% { --pos: 64%; }
 }
 html.js .ba.reveal.in,
-html.js .reveal.in > .ba {
+html.js .reveal.in .ba {
   animation: ba-sweep 2.6s cubic-bezier(.65, 0, .35, 1) .5s 1 both;
 }
 .ba.ba--interacted { animation: none !important; }
@@ -1533,8 +1586,9 @@ html.js .reveal.in > .ba {
   border-radius: 999px;
   background: rgba(13, 29, 22, .78);
   color: #fff;
-  font: 600 .8rem/1.3 var(--font-body);
-  letter-spacing: .06em;
+  font: 600 .72rem/1.3 var(--font-body);
+  letter-spacing: .12em;
+  text-transform: uppercase;
   pointer-events: none;
 }
 .ba__tag--before { left: 1rem; }
@@ -1736,7 +1790,7 @@ html.js .reveal--curtain.curtain-armed:not(.in) {
   }
   .hero__brand { aspect-ratio: 4 / 5; }
 
-  .ba-block { grid-template-columns: 5fr 7fr; gap: clamp(2rem, 4vw, 3.5rem); }
+  .ba-block .ba-panel { grid-template-columns: 5fr 7fr; gap: clamp(2rem, 4vw, 3.5rem); }
   .ba-block__head { margin-bottom: 0; }
 
   .main-nav { display: block; }

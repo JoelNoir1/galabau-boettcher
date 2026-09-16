@@ -387,29 +387,63 @@
           </a>
         </div>
 
-        <!-- Vorher/Nachher aus einem echten Projekt: Baugrube -> fertige Bodenplatte -->
-        <div class="ba-block reveal">
-          <div class="ba-block__head">
+        <!-- Vorher/Nachher: mehrere echte Vergleiche, per Umschalter waehlbar.
+             Ohne JavaScript sind alle Vergleiche untereinander sichtbar. -->
+        <div class="ba-block reveal" data-ba-switch>
+          <div class="ba-block__top">
             <p class="eyebrow">Vorher / Nachher</p>
-            <h3>Von der Baugrube zur fertigen Bodenplatte.</h3>
-            <p>Beide Aufnahmen stammen vom selben Grundstück. Ziehen Sie den Regler, um den Unterschied zu sehen.</p>
-          </div>
-          <div class="ba" data-ba>
-            <picture>
-              <source type="image/avif" srcset="assets/img/nachher-480.avif 480w, assets/img/nachher-800.avif 800w, assets/img/nachher-1200.avif 1200w" sizes="(min-width: 70em) 700px, 92vw">
-              <source type="image/webp" srcset="assets/img/nachher-480.webp 480w, assets/img/nachher-800.webp 800w, assets/img/nachher-1200.webp 1200w" sizes="(min-width: 70em) 700px, 92vw">
-              <img src="assets/img/nachher-800.jpg" srcset="assets/img/nachher-480.jpg 480w, assets/img/nachher-800.jpg 800w, assets/img/nachher-1200.jpg 1200w" sizes="(min-width: 70em) 700px, 92vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Nachher: fertig gegossene Betonbodenplatte in der Schalung">
-            </picture>
-            <div class="ba__after" aria-hidden="true">
-              <picture>
-                <source type="image/avif" srcset="assets/img/vorher-480.avif 480w, assets/img/vorher-800.avif 800w, assets/img/vorher-1200.avif 1200w" sizes="(min-width: 70em) 700px, 92vw">
-                <source type="image/webp" srcset="assets/img/vorher-480.webp 480w, assets/img/vorher-800.webp 800w, assets/img/vorher-1200.webp 1200w" sizes="(min-width: 70em) 700px, 92vw">
-                <img src="assets/img/vorher-800.jpg" srcset="assets/img/vorher-480.jpg 480w, assets/img/vorher-800.jpg 800w, assets/img/vorher-1200.jpg 1200w" sizes="(min-width: 70em) 700px, 92vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Vorher: ausgehobene Baugrube mit Erdaushub und Nivelliergerät">
-              </picture>
+            <div class="ba-tabs" role="tablist" aria-label="Vorher/Nachher-Vergleich auswählen">
+              <button class="ba-tabs__tab" type="button" role="tab" id="vn-start-tab-1" aria-controls="vn-start-panel-1" aria-selected="true">Bodenplatte</button>
+              <button class="ba-tabs__tab" type="button" role="tab" id="vn-start-tab-2" aria-controls="vn-start-panel-2" aria-selected="false" tabindex="-1">Projekt 2</button>
             </div>
-            <span class="ba__tag ba__tag--before">Vorher</span>
-            <span class="ba__tag ba__tag--after">Nachher</span>
-            <div class="ba__handle" role="slider" tabindex="0" aria-label="Vergleichsregler: Vorher/Nachher" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-orientation="horizontal"></div>
+          </div>
+
+          <div class="ba-panel" id="vn-start-panel-1" role="tabpanel" aria-labelledby="vn-start-tab-1">
+            <div class="ba-block__head">
+              <h3>Von der Baugrube zur fertigen Bodenplatte.</h3>
+              <p>Beide Aufnahmen stammen vom selben Grundstück. Ziehen Sie den Regler, um den Unterschied zu sehen.</p>
+            </div>
+            <div class="ba" data-ba>
+              <picture>
+                <source type="image/avif" srcset="assets/img/nachher-480.avif 480w, assets/img/nachher-800.avif 800w, assets/img/nachher-1200.avif 1200w" sizes="(min-width: 70em) 700px, 92vw">
+                <source type="image/webp" srcset="assets/img/nachher-480.webp 480w, assets/img/nachher-800.webp 800w, assets/img/nachher-1200.webp 1200w" sizes="(min-width: 70em) 700px, 92vw">
+                <img src="assets/img/nachher-800.jpg" srcset="assets/img/nachher-480.jpg 480w, assets/img/nachher-800.jpg 800w, assets/img/nachher-1200.jpg 1200w" sizes="(min-width: 70em) 700px, 92vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Nachher: fertig gegossene Betonbodenplatte in der Schalung">
+              </picture>
+              <div class="ba__after" aria-hidden="true">
+                <picture>
+                  <source type="image/avif" srcset="assets/img/vorher-480.avif 480w, assets/img/vorher-800.avif 800w, assets/img/vorher-1200.avif 1200w" sizes="(min-width: 70em) 700px, 92vw">
+                  <source type="image/webp" srcset="assets/img/vorher-480.webp 480w, assets/img/vorher-800.webp 800w, assets/img/vorher-1200.webp 1200w" sizes="(min-width: 70em) 700px, 92vw">
+                  <img src="assets/img/vorher-800.jpg" srcset="assets/img/vorher-480.jpg 480w, assets/img/vorher-800.jpg 800w, assets/img/vorher-1200.jpg 1200w" sizes="(min-width: 70em) 700px, 92vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Vorher: ausgehobene Baugrube mit Erdaushub und Nivelliergerät">
+                </picture>
+              </div>
+              <span class="ba__tag ba__tag--before">Vorher</span>
+              <span class="ba__tag ba__tag--after">Nachher</span>
+              <div class="ba__handle" role="slider" tabindex="0" aria-label="Vergleichsregler: Vorher/Nachher" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-orientation="horizontal"></div>
+            </div>
+          </div>
+
+          <div class="ba-panel" id="vn-start-panel-2" role="tabpanel" aria-labelledby="vn-start-tab-2">
+            <div class="ba-block__head">
+              <h3>Vorher / Nachher</h3>
+              <p>Ziehen Sie den Regler, um den Zustand vorher und nachher zu vergleichen.</p>
+            </div>
+            <div class="ba ba--portrait" data-ba>
+              <picture>
+                <source type="image/avif" srcset="assets/img/nachher-2-480.avif 480w, assets/img/nachher-2-800.avif 800w, assets/img/nachher-2-1200.avif 1200w" sizes="(min-width: 56em) 26rem, 92vw">
+                <source type="image/webp" srcset="assets/img/nachher-2-480.webp 480w, assets/img/nachher-2-800.webp 800w, assets/img/nachher-2-1200.webp 1200w" sizes="(min-width: 56em) 26rem, 92vw">
+                <img src="assets/img/nachher-2-800.jpg" srcset="assets/img/nachher-2-480.jpg 480w, assets/img/nachher-2-800.jpg 800w, assets/img/nachher-2-1200.jpg 1200w" sizes="(min-width: 56em) 26rem, 92vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Nachher: glatt abgezogene Bodenfläche in einem Raum mit Folie am Wandsockel">
+              </picture>
+              <div class="ba__after" aria-hidden="true">
+                <picture>
+                  <source type="image/avif" srcset="assets/img/vorher-2-480.avif 480w, assets/img/vorher-2-800.avif 800w, assets/img/vorher-2-1200.avif 1200w" sizes="(min-width: 56em) 26rem, 92vw">
+                  <source type="image/webp" srcset="assets/img/vorher-2-480.webp 480w, assets/img/vorher-2-800.webp 800w, assets/img/vorher-2-1200.webp 1200w" sizes="(min-width: 56em) 26rem, 92vw">
+                  <img src="assets/img/vorher-2-800.jpg" srcset="assets/img/vorher-2-480.jpg 480w, assets/img/vorher-2-800.jpg 800w, assets/img/vorher-2-1200.jpg 1200w" sizes="(min-width: 56em) 26rem, 92vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Vorher: aufgeschütteter, noch unebener Boden mit Rohrleitung">
+                </picture>
+              </div>
+              <span class="ba__tag ba__tag--before">Vorher</span>
+              <span class="ba__tag ba__tag--after">Nachher</span>
+              <div class="ba__handle" role="slider" tabindex="0" aria-label="Vergleichsregler Projekt 2: Vorher/Nachher" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-orientation="horizontal"></div>
+            </div>
           </div>
         </div>
 
