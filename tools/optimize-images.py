@@ -82,29 +82,6 @@ def responsive(name: str, slug: str) -> None:
         save_all(sq, f"{slug}-sq-{SQUARE}")
 
 
-def hero() -> None:
-    """Hero-Bild der Startseite: 4:5-Ausschnitt aus dem Pflaster-Projekt.
-
-    Eigener Ausschnitt statt der normalen responsive-Variante, weil das Bild
-    im Hero das LCP-Element ist: engerer Zuschnitt, etwas staerkere Kompression,
-    dadurch spuerbar kleiner als pflaster-wegebau-800.
-    """
-    im = load("pflaster-wegebau-neu.png")
-    # Oberer Ausschnitt: Himmel, Baeume und die Perspektive des Weges bleiben
-    # erhalten. Ein tieferer Zuschnitt zeigt nur noch abstrakte Steintextur.
-    target_h = round(im.width * 5 / 4)
-    top = round((im.height - target_h) * 0.10)
-    im = im.crop((0, top, im.width, top + target_h))
-    for w in (480, 720, 1000):
-        h = round(w * 5 / 4)
-        s = im.resize((w, h), Image.LANCZOS)
-        s.save(OUT / f"hero-pflaster-{w}.avif", "AVIF", quality=46)
-        s.save(OUT / f"hero-pflaster-{w}.webp", "WEBP", quality=68, method=6)
-        s.save(OUT / f"hero-pflaster-{w}.jpg", "JPEG", quality=76, optimize=True, progressive=True)
-        kb = (OUT / f"hero-pflaster-{w}.avif").stat().st_size // 1024
-        report.append(f"  hero-pflaster-{w}.(avif|webp|jpg)  {w}x{h}  (avif {kb} KB)")
-
-
 # Instagram-Posts mit eingebranntem Werbetext: Schriftzug oben, Claim bzw.
 # Logo-Wasserzeichen unten. Dazwischen liegt jeweils ein textfreies Band mit
 # dem eigentlichen Motiv - genau das wird fuer die Website ausgeschnitten.
@@ -143,6 +120,10 @@ def logo() -> tuple[Image.Image, tuple[int, int, int]]:
         round(im.width * 0.7344), round(im.height * 0.669),
     )
     mark = im.crop(box)
+    # Grosse Variante fuer den Markenblock im Hero: Originalausschnitt in
+    # voller Aufloesung, weder skaliert noch bearbeitet.
+    mark.save(OUT / "logo-mark-hd.webp", "WEBP", quality=92, method=6)
+    report.append(f"  logo-mark-hd.webp  {mark.width}x{mark.height} (unskaliert)")
     mark = mark.resize((640, round(mark.height * 640 / mark.width)), Image.LANCZOS)
     mark.save(OUT / "logo-mark.png", "PNG", optimize=True)
     mark.save(OUT / "logo-mark.webp", "WEBP", quality=88, method=6)
@@ -214,7 +195,6 @@ def main() -> None:
     mark, bg = logo()
     for name, slug in PHOTOS.items():
         responsive(name, slug)
-    hero()
     insta_crops()
     favicons()
     og_image(mark, bg)

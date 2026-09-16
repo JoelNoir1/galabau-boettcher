@@ -495,29 +495,59 @@ body.nav-open { overflow: hidden; }
    Trennpunkt bliebe dann am Zeilenende hängen. Der Abstand trennt genug. */
 .hero__proof span { white-space: nowrap; }
 
-.hero__figure {
-  position: relative;
-  margin: 0;
+/* Markenblock rechts im Hero: Original-Logo auf einer ruhigen Flaeche in
+   exakt der Logo-Grundfarbe (#1A3A2D), dadurch ohne sichtbare Bildkante.
+   Logo wird nie beschnitten (kein object-fit), nur skaliert. */
+.hero__brand {
+  container: brand / inline-size;
   display: grid;
-  gap: .85rem;
-  justify-items: start;
-}
-.hero__figure picture { display: block; width: 100%; }
-.hero__figure img {
-  width: 100%;
-  /* Mobil flacher, damit der Hero nicht zur Endlosfläche wird; ab Tablet
-     wieder das ursprüngliche Hochformat des Fotos. Oben ausgerichtet, damit
-     im flachen Ausschnitt Himmel und Bepflanzung sichtbar bleiben und nicht
-     nur die Steintextur. */
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  object-position: 50% 12%;
+  place-items: center;
+  align-content: center;
+  gap: clamp(1.4rem, 3vw, 2.2rem);
+  padding: clamp(2.2rem, 6vw, 3.5rem) clamp(1.5rem, 5vw, 3rem);
+  background: var(--c-forest);
+  border: 1px solid var(--c-line-dark);
   border-radius: calc(var(--radius) + 4px);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, .4);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
+  text-align: center;
 }
-.hero__figure figcaption {
-  font: 500 .86rem/1.5 var(--font-body);
-  color: var(--text-soft-on-dark);
+.hero__brand-logo {
+  width: 100%;
+  max-width: 30rem;
+  height: auto;
+}
+/* Trennpunkt nur, wenn die Flaeche breit genug fuer eine Zeile ist, damit er
+   beim Umbruch nicht am Zeilenende haengen bleibt */
+.hero__brand-meta span { white-space: nowrap; }
+.hero__brand-meta span + span::before { content: none; }
+@container brand (min-width: 26rem) {
+  .hero__brand-meta span + span::before {
+    content: "·";
+    margin-right: .7rem;
+  }
+}
+.hero__brand-text {
+  display: grid;
+  gap: .55rem;
+  padding-top: clamp(1.2rem, 2.5vw, 1.6rem);
+  border-top: 1px solid var(--c-line-dark);
+}
+.hero__brand-name {
+  margin: 0;
+  font: 800 clamp(1.15rem, 1rem + .8vw, 1.5rem)/1.25 var(--font-display);
+  letter-spacing: -.01em;
+  color: var(--c-cream);
+}
+.hero__brand-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .2rem .7rem;
+  margin: 0;
+  font: 700 .74rem/1.4 var(--font-body);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--c-lime-bright);
 }
 
 .scroll-hint {
@@ -1662,7 +1692,7 @@ html.js .reveal--curtain.curtain-armed:not(.in) {
 /* Bild kommt zuletzt und nur als ruhiges Aufblenden – kein zweiter Versatz,
    damit im Hero genau eine Bewegung stattfindet. */
 @keyframes hero-fade { from { opacity: 0; } }
-.hero__figure { animation: hero-fade 1s var(--ease) .2s backwards; }
+.hero__brand { animation: hero-fade 1s var(--ease) .2s backwards; }
 
 /* ---------- Mikroanimationen ---------- */
 .chip { transition: border-color var(--t-fast); }
@@ -1704,7 +1734,7 @@ html.js .reveal--curtain.curtain-armed:not(.in) {
     grid-template-columns: minmax(0, 1fr) 34rem;
     gap: clamp(2.5rem, 5vw, 4.5rem);
   }
-  .hero__figure img { aspect-ratio: 4 / 5; object-position: 50% 50%; }
+  .hero__brand { aspect-ratio: 4 / 5; }
 
   .ba-block { grid-template-columns: 5fr 7fr; gap: clamp(2rem, 4vw, 3.5rem); }
   .ba-block__head { margin-bottom: 0; }

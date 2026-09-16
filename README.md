@@ -70,10 +70,10 @@ python tools/optimize-images.py
 Das Skript erzeugt automatisch AVIF/WebP/JPG in 480/800/1200 px sowie
 quadratische 600-px-Kacheln für das Instagram-Grid (inkl. EXIF-Korrektur).
 
-- **Hero-Foto:** Die Startseite zeigt einen 4:5-Ausschnitt des
-  Pflaster-Projekts (`hero-pflaster-*`, erzeugt von der Funktion `hero()` in
-  der Pipeline, bewusst stärker komprimiert, weil es das LCP-Element ist).
-  Für ein anderes Motiv dort die Quelldatei und den Ausschnitt ändern.
+- **Hero:** Rechts steht kein Projektfoto, sondern ein Markenblock mit dem
+  Original-Logo (`logo-mark-hd.webp`, unskalierter Ausschnitt aus
+  `content/originale/logo.png.jpeg`). Das fruehere Pflaster-/Parkplatzfoto
+  wurde dort entfernt: Boettcher war bei jenem Projekt nur Subunternehmer.
 - **Vorher/Nachher:** Echtes Bildpaar (`vorher-*` / `nachher-*`, Erdarbeiten →
   Bodenplatte) ist eingebunden. Für weitere Paare die Quelldateien nach
   `content/originale/` legen, in `tools/optimize-images.py` eintragen und
