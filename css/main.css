@@ -852,20 +852,17 @@ a.trust__item:hover {
 }
 
 /* ---------- Bewertungen ---------- */
-.tst-track {
+/* Rezensionen: einfaches Raster statt Karussell. Bei zwei Karten untereinander
+   bzw. nebeneinander lesbarer als ein Wischbereich, und es braucht kein JS. */
+.tst-grid {
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: min(88%, 21rem);
-  gap: 1rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding: .25rem .25rem 1.1rem;
-  scrollbar-width: none;
+  gap: 1.25rem;
 }
-.tst-track::-webkit-scrollbar { display: none; }
 .tst {
   display: flex;
   flex-direction: column;
+  /* figure hat im Browser standardmaessig 40px Seitenrand */
+  margin: 0;
   gap: .9rem;
   padding: 1.7rem 1.6rem;
   background: var(--bg-card);
@@ -890,20 +887,6 @@ a.trust__item:hover {
   font: 500 .82rem/1.4 var(--font-body);
   color: var(--text-soft);
 }
-.tst-dots {
-  display: flex;
-  justify-content: center;
-  gap: .5rem;
-}
-.tst-dots button {
-  width: .55rem; height: .55rem;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: var(--line);
-  transition: background var(--t-fast), transform var(--t-fast);
-}
-.tst-dots button.active { background: var(--c-lime); transform: scale(1.25); }
 
 /* Google-Bewertungen */
 .grating {
@@ -1869,13 +1852,8 @@ html.js .reveal--curtain.curtain-armed:not(.in) {
   .timeline { position: relative; }
   .step .step__num { position: absolute; top: -3.4rem; left: 0; }
 
-  .tst-track {
-    grid-auto-flow: row;
-    grid-template-columns: repeat(3, 1fr);
-    overflow: visible;
-    padding: 0;
-  }
-  .tst-dots { display: none; }
+  /* passt sich der Anzahl der Rezensionen an (2, 3, ...) */
+  .tst-grid { grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); }
 }
 
 @media (min-width: 70em) {

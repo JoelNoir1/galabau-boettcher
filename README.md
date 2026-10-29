@@ -37,12 +37,12 @@ Form, die Suchmaschinen erwarten.
    Ändert sich die Rufnummer oder der Nachrichtentext, müssen alle
    `wa.me`-Links angepasst werden (je 2–3 Stellen pro Seite).
    Der Datenschutzhinweis dazu steht in `datenschutz/` (Abschnitt 4).
-2. **Google-Bewertungen:** Unter `#bewertungen` in `index.html` steht die
-   echte Rezension von Christian Lang (5,0 aus 1 Google-Rezension). Weitere
-   echte Rezensionen können als zusätzliche `.tst`-Karten ergänzt werden;
-   dann `.tst-single` zu `.tst-track` ändern und Anzahl/`aggregateRating`
-   (JSON-LD im `<head>`) anpassen. Den Button-Link auf das Google-Profil
-   bei Vorliegen der kurzen Profil-URL (`https://g.page/r/…`) ersetzen.
+2. **Google-Bewertungen:** Unter `#bewertungen` in `index.html` stehen die
+   beiden echten Rezensionen (Christian Lang, Lena Hitzel), Wortlaut
+   unverändert aus dem Profil. Bei einer neuen Rezension: `.tst`-Karte
+   ergänzen, Anzahl an drei Stellen anpassen (Fließtext, `aria-label`
+   der Bewertungszeile, Vertrauensband) und `aggregateRating` im JSON-LD.
+   Profil-Link: `https://maps.google.com/?cid=8073936532487100627`.
 3. **Fotos ohne Instagram-Overlay:** Drei Originale (`ZAUNBAU1.jpg`,
    `termin sichern.jpg`, `1.jpg`) sind Instagram-Posts mit eingebranntem
    Werbetext. Für die Website schneidet `tools/optimize-images.py`

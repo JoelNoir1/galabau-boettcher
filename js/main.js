@@ -138,42 +138,6 @@
     io.observe(timeline);
   }
 
-  /* ---------- Bewertungs-Slider: Punkte (mobil) ---------- */
-  const tstTrack = $(".tst-track");
-  const tstDots = $(".tst-dots");
-  if (tstTrack && tstDots) {
-    const cards = $$(".tst", tstTrack);
-    cards.forEach((_, i) => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.setAttribute("aria-label", `Bewertung ${i + 1} anzeigen`);
-      if (i === 0) b.classList.add("active");
-      b.addEventListener("click", () => {
-        cards[i].scrollIntoView({ behavior: motionOK ? "smooth" : "auto", block: "nearest", inline: "center" });
-      });
-      tstDots.appendChild(b);
-    });
-    const dots = $$("button", tstDots);
-    let raf = 0;
-    tstTrack.addEventListener(
-      "scroll",
-      () => {
-        if (raf) return;
-        raf = requestAnimationFrame(() => {
-          raf = 0;
-          const mid = tstTrack.scrollLeft + tstTrack.clientWidth / 2;
-          let best = 0;
-          cards.forEach((c, i) => {
-            const center = c.offsetLeft + c.offsetWidth / 2;
-            if (Math.abs(center - mid) < Math.abs(cards[best].offsetLeft + cards[best].offsetWidth / 2 - mid)) best = i;
-          });
-          dots.forEach((d, i) => d.classList.toggle("active", i === best));
-        });
-      },
-      { passive: true }
-    );
-  }
-
   /* ---------- Vorher/Nachher-Slider ---------- */
   $$("[data-ba]").forEach((ba) => {
     const handle = $(".ba__handle", ba);
